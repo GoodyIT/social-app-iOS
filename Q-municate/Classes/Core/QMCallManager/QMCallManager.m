@@ -41,7 +41,7 @@ QBRTCClientDelegate
 - (void)serviceWillStart {
     
     [QBRTCConfig setAnswerTimeInterval:kQMAnswerTimeInterval];
-    [QBRTCConfig setDisconnectTimeInterval:kQMDisconnectTimeInterval];
+//    [QBRTCConfig setDisconnectTimeInterval:kQMDisconnectTimeInterval];
     [QBRTCConfig setDialingTimeInterval:kQMDialingTimeInterval];
     
     [[QBRTCClient instance] addDelegate:self];
@@ -74,10 +74,29 @@ QBRTCClientDelegate
             return;
         }
         
-        [[QBRTCSoundRouter instance] initialize];
+//        [[QBRTCSoundRouter instance] initialize];
+//        
+//        QBRTCSoundRoute soundRoute = conferenceType == QBRTCConferenceTypeVideo ? QBRTCSoundRouteSpeaker : QBRTCSoundRouteReceiver;
+//        [[QBRTCSoundRouter instance] setCurrentSoundRoute:soundRoute];
         
-        QBRTCSoundRoute soundRoute = conferenceType == QBRTCConferenceTypeVideo ? QBRTCSoundRouteSpeaker : QBRTCSoundRouteReceiver;
-        [[QBRTCSoundRouter instance] setCurrentSoundRoute:soundRoute];
+        //Save current audio configuration before start call or accept call
+        [[QBRTCAudioSession instance] initialize];
+        //OR you can initialize audio session with a specific configuration
+        [[QBRTCAudioSession instance] initializeWithConfigurationBlock:^(QBRTCAudioSessionConfiguration *configuration) {
+            // adding blutetooth support
+            configuration.categoryOptions |= AVAudioSessionCategoryOptionAllowBluetooth;
+            configuration.categoryOptions |= AVAudioSessionCategoryOptionAllowBluetoothA2DP;
+            
+            // adding airplay support
+            configuration.categoryOptions |= AVAudioSessionCategoryOptionAllowAirPlay;
+            
+            if (self.session.conferenceType == QBRTCConferenceTypeVideo) {
+                // setting mode to video chat to enable airplay audio and speaker only for video call
+                configuration.mode = AVAudioSessionModeVideoChat;
+            }
+        }];
+        
+        [QBRTCAudioSession instance].currentAudioDevice = self.session.conferenceType == QBRTCConferenceTypeVideo ? QBRTCAudioDeviceSpeaker : QBRTCAudioDeviceReceiver;
         
         [self startPlayingCallingSound];
         
@@ -88,7 +107,12 @@ QBRTCClientDelegate
         QBUUser *currentUser = self.serviceManager.currentProfile.userData;
         
         NSString *callerName = currentUser.fullName ?: [NSString stringWithFormat:@"%tu", currentUser.ID];
-        NSString *pushText = [NSString stringWithFormat:@"%@ %@", callerName, NSLocalizedString(@"QM_STR_IS_CALLING_YOU", nil)];
+        NSString *pushText = [NSString stringWithFormat:@"%@ %@", callerName, @"wants to call"];
+        
+        if (conferenceType == QBRTCConferenceTypeVideo) {
+            pushText = [NSString stringWithFormat:@"%@ %@", callerName, @"wants to video chat"];
+
+        }
         
         [QMNotification sendPushNotificationToUser:opponentUser withText:pushText];
         
@@ -169,8 +193,10 @@ QBRTCClientDelegate
         return;
     }
     
-    [[QBRTCSoundRouter instance] initialize];
-    [[QBRTCSoundRouter instance] setCurrentSoundRoute:QBRTCSoundRouteSpeaker];
+//    [[QBRTCSoundRouter instance] initialize];
+//    [[QBRTCSoundRouter instance] setCurrentSoundRoute:QBRTCSoundRouteSpeaker];
+    
+    [QBRTCAudioSession instance].currentAudioDevice = QBRTCAudioDeviceSpeaker;
     
     self.session = session;
     self.hasActiveCall = YES;
@@ -257,7 +283,9 @@ QBRTCClientDelegate
     
     // settings sound router to speaker in order
     // to play end of call sound in it
-    [[QBRTCSoundRouter instance] setCurrentSoundRoute:QBRTCSoundRouteSpeaker];
+//    [[QBRTCSoundRouter instance] setCurrentSoundRoute:QBRTCSoundRouteSpeaker];
+    
+    [QBRTCAudioSession instance].currentAudioDevice = QBRTCAudioDeviceSpeaker;
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         
@@ -287,16 +315,16 @@ QBRTCClientDelegate
     
     for (NSString *url in urls) {
         
-        QBRTCICEServer *stunServer = [QBRTCICEServer serverWithURL:[NSString stringWithFormat:@"stun:%@", url]
+        QBRTCICEServer *stunServer = [QBRTCICEServer serverWithURLs:@[[NSString stringWithFormat:@"stun:%@", url]]
                                                           username:@""
                                                           password:@""];
         
         
-        QBRTCICEServer *turnUDPServer = [QBRTCICEServer serverWithURL:[NSString stringWithFormat:@"turn:%@:3478?transport=udp", url]
+        QBRTCICEServer *turnUDPServer = [QBRTCICEServer serverWithURLs:@[[NSString stringWithFormat:@"turn:%@:3478?transport=udp", url]]
                                                              username:userName
                                                              password:password];
         
-        QBRTCICEServer *turnTCPServer = [QBRTCICEServer serverWithURL:[NSString stringWithFormat:@"turn:%@:3478?transport=tcp", url]
+        QBRTCICEServer *turnTCPServer = [QBRTCICEServer serverWithURLs:@[[NSString stringWithFormat:@"turn:%@:3478?transport=tcp", url]]
                                                              username:userName
                                                              password:password];
         
@@ -483,8 +511,15 @@ QBRTCClientDelegate
     [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"QM_STR_SETTINGS", nil)
                                                         style:UIAlertActionStyleDefault
                                                       handler:^(UIAlertAction * _Nonnull __unused action) {
+                                                          UIApplication *application = [UIApplication sharedApplication];
+                                                          NSURL *URL = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
                                                           
-                                                          [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+                                                          if ([application respondsToSelector:@selector(openURL:options:completionHandler:)]) {
+                                                              [application openURL:URL options:@{}
+                                                                 completionHandler:nil];
+                                                          } else {
+                                                            [application openURL:URL];
+                                                          }
                                                       }]];
     
     UIViewController *viewController = [[[(UISplitViewController *)[UIApplication sharedApplication].keyWindow.rootViewController viewControllers] firstObject] selectedViewController];

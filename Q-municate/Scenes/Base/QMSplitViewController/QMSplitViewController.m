@@ -21,10 +21,11 @@
 @implementation QMSplitViewController
 
 - (void)awakeFromNib {
-    [super awakeFromNib];
+    [super awakeFromNib];    
     
     self.delegate = self;
     self.preferredDisplayMode = UISplitViewControllerDisplayModeAllVisible;
+    self.navigationController.navigationBarHidden = YES;
 }
 
 #pragma mark - UISplitViewControllerDelegate
@@ -41,6 +42,8 @@
         
         [splitViewController setViewControllers:@[masterVC, detailVC]];
     }
+    
+//    [splitViewController setViewControllers:@[masterVC, detailVC]];
     
     return YES;
 }

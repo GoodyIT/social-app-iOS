@@ -42,15 +42,15 @@ QMTagFieldViewDelegate
     // removing left bar button item that is responsible for split view
     // display mode managing. Not removing it will cause item update
     // for deallocated navigation item
-    self.navigationItem.leftBarButtonItem = nil;
+//    self.navigationItem.leftBarButtonItem = nil;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     self.navigationItem.rightBarButtonItem.enabled = NO;
-    self.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
-    self.navigationItem.leftItemsSupplementBackButton = YES;
+//    self.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
+//    self.navigationItem.leftItemsSupplementBackButton = YES;
     
     // configuring tag field
     self.tagFieldView.placeholder = NSLocalizedString(@"QM_STR_TAG_FIELD_PLACEHOLDER", nil);

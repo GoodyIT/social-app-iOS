@@ -84,8 +84,8 @@
 "QM_STR_DELIVERED_TO_NAMES_STATUS" = "Delivered: %@";
 
 // *********** Dialogs Screen ***********
-"QM_STR_LOCAL_SEARCH" = "Local";
-"QM_STR_GLOBAL_SEARCH" = "Global";
+"QM_STR_LOCAL_SEARCH" = "My Contacts";
+"QM_STR_GLOBAL_SEARCH" = "All Users";
 "QM_STR_SEARCH_BAR_PLACEHOLDER" = "Search";
 "QM_STR_CONFIRM_DELETE_DIALOG" = "Do you really want to delete \"%@\" chat?";
 
@@ -140,6 +140,7 @@
 "QM_STR_CHAT_RECONNECTED" = "Reconnected";
 "QM_STR_CHAT_FAILED_TO_CONNECT_WITH_ERROR" = "Chat failed to connect: %@";
 "QM_STR_SIGNING_IN" = "Signing in";
+"QM_STR_SIGNING_UP" = "Signing up";
 "QM_STR_LOADING" = "Loading";
 "QM_STR_LOST_INTERNET_CONNECTION" = "Lost internet connection";
 "QM_STR_CONNECTION_IN_PROGRESS" = "Connecting to chat service, please wait";

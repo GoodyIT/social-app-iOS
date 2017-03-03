@@ -16,6 +16,7 @@
 #import "QBChatDialog+OpponentID.h"
 #import <SVProgressHUD.h>
 #import "QMSplitViewController.h"
+#import "UserProfileViewController.h"
 
 #import <NYTPhotoViewer/NYTPhotosViewController.h>
 #import "QMImagePreview.h"
@@ -26,7 +27,6 @@ typedef NS_ENUM(NSUInteger, QMUserInfoSection) {
     
     QMUserInfoSectionStatus,
     QMUserInfoSectionInfoPhone,
-    QMUserInfoSectionInfoEmail,
     QMUserInfoSectionContactInteractions,
     QMUserInfoSectionRemoveContact,
     QMUserInfoSectionAddAction
@@ -71,7 +71,6 @@ NYTPhotosViewControllerDelegate
     // removing left bar button item that is responsible for split view
     // display mode managing. Not removing it will cause item update
     // for deallocated navigation item
-    self.navigationItem.leftBarButtonItem = nil;
 }
 
 - (void)viewDidLoad {
@@ -79,15 +78,7 @@ NYTPhotosViewControllerDelegate
     NSAssert(self.user.ID > 0, @"Must be a valid user ID!");
     
     [super viewDidLoad];
-    
-    if (self.navigationController.viewControllers.count == 1) {
-        
-        // showing split view display mode buttons
-        // only if controller is first in stack
-        self.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
-        self.navigationItem.leftItemsSupplementBackButton = YES;
-    }
-    
+
     self.hiddenSections = [NSMutableIndexSet indexSet];
     self.avatarImageView.imageViewType = QMImageViewTypeCircle;
     self.avatarImageView.delegate = self;
@@ -122,9 +113,28 @@ NYTPhotosViewControllerDelegate
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    //  self.navigationController.navigationBarHidden = NO;
     
+        UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 13, 23)];
+        [backButton setBackgroundImage:[UIImage imageNamed:@"Back"] forState:UIControlStateNormal];
+        [backButton addTarget:self action:@selector(dismissScreen) forControlEvents:UIControlEventTouchUpInside];
+    
+        UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+    
+        [self.navigationItem setLeftBarButtonItems:@[backButtonItem] animated:YES];
     // smooth rows deselection
     [self qm_smoothlyDeselectRowsForTableView:self.tableView];
+}
+
+- (void) dismissScreen
+{
+    [self.view endEditing:YES];
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+}
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    //   self.navigationController.navigationBarHidden = NO;
 }
 
 #pragma mark - Methods
@@ -180,7 +190,7 @@ NYTPhotosViewControllerDelegate
 
 - (void)updateUserIteractions {
     
-    BOOL isFriend = [[QMCore instance].contactManager isFriendWithUserID:self.user.ID];
+    BOOL isFriend = [[QMCore instance].contactManager isCustomFriendWithUserID:self.user.ID];
     if (isFriend) {
         
         [self.hiddenSections addIndex:QMUserInfoSectionAddAction];
@@ -246,14 +256,14 @@ NYTPhotosViewControllerDelegate
     }
     
     // Email
-    if (self.user.email.length > 0) {
-        
-        self.emailLabel.text = self.user.email.length > 0 ? self.user.email : NSLocalizedString(@"QM_STR_NONE", nil);
-    }
-    else {
-        
-        [self.hiddenSections addIndex:QMUserInfoSectionInfoEmail];
-    }
+    //    if (self.user.email.length > 0) {
+    //
+    //        self.emailLabel.text = self.user.email.length > 0 ? self.user.email : NSLocalizedString(@"QM_STR_NONE", nil);
+    //    }
+    //    else {
+    //
+    //        [self.hiddenSections addIndex:QMUserInfoSectionInfoEmail];
+    //    }
 }
 
 #pragma mark - Actions
@@ -377,19 +387,22 @@ NYTPhotosViewControllerDelegate
     
     void (^removeAction)(UIAlertAction *action) = ^void(UIAlertAction * __unused action) {
         
-        [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+        [SVProgressHUD show];
+        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
         
         self.task = [[[QMCore instance].contactManager removeUserFromContactList:self.user] continueWithBlock:^id _Nullable(BFTask * _Nonnull __unused task) {
             
+            [SVProgressHUD dismiss];
+            
             if (self.splitViewController.isCollapsed) {
                 
-                [self.navigationController popViewControllerAnimated:YES];
+                [self.navigationController dismissViewControllerAnimated:YES completion:nil];
             }
             else {
-                
                 [(QMSplitViewController *)self.splitViewController showPlaceholderDetailViewController];
+                [self.navigationController dismissViewControllerAnimated:YES completion:nil];
             }
-            [SVProgressHUD dismiss];
+            
             
             return nil;
         }];
@@ -430,9 +443,17 @@ NYTPhotosViewControllerDelegate
     
     if ([segue.identifier isEqualToString:kQMSceneSegueChat]) {
         
-        QMChatVC *chatViewController = segue.destinationViewController;
-        chatViewController.chatDialog = sender;
+        QMChatVC* chatVC = [(UINavigationController*)segue.destinationViewController viewControllers].firstObject;
+        chatVC.chatDialog = sender;
     }
+    //
+    //    if ([segue.identifier isEqualToString:kProfileSegue]) {
+    //        NSInteger tagNumber = [sender integerValue];
+    //        PostModel *post = self.postsArray[tagNumber];
+    //        UINavigationController* navigationController = segue.destinationViewController;
+    //        UserProfileViewController* profileViewController = navigationController.viewControllers.firstObject;
+    //        profileViewController.post = post;
+    //    }
 }
 
 #pragma mark - UITableViewDataSource
@@ -562,12 +583,12 @@ NYTPhotosViewControllerDelegate
         return NO;
     }
     
-    if (section == QMUserInfoSectionInfoEmail
-        && ![self.hiddenSections containsIndex:QMUserInfoSectionInfoPhone]
-        && ![self.hiddenSections containsIndex:QMUserInfoSectionInfoEmail]) {
-        
-        return NO;
-    }
+    //    if (section == QMUserInfoSectionInfoEmail
+    //        && ![self.hiddenSections containsIndex:QMUserInfoSectionInfoPhone]
+    //        && ![self.hiddenSections containsIndex:QMUserInfoSectionInfoEmail]) {
+    //        
+    //        return NO;
+    //    }
     
     return YES;
 }

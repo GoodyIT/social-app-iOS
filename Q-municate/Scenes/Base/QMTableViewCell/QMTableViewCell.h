@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <QMImageView.h>
 
 @interface QMTableViewCell : UITableViewCell
+
+@property (weak, nonatomic) IBOutlet QMImageView *avatarImage;
 
 + (void)registerForReuseInTableView:(UITableView *)tableView;
 + (NSString *)cellIdentifier;

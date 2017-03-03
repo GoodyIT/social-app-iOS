@@ -11,6 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @class QMCore;
+@class QMContactsDataSource;
 
 /**
  *  This class represents basic contacts managing and tasks.
@@ -119,6 +120,8 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (BOOL)isFriendWithUserID:(NSUInteger)userID;
 
+
+- (BOOL)isCustomFriendWithUserID:(NSUInteger)userID;
 /**
  *  Whether contact list item is existent for a specific user ID.
  *

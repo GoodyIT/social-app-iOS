@@ -14,6 +14,7 @@
 #import "QMChatManager.h"
 #import "QMPushNotificationManager.h"
 #import "QMCallManager.h"
+#import "QMNetworkManager.h"
 
 @class Reachability;
 
@@ -58,6 +59,12 @@ QMContactListServiceDelegate
 @property (strong, nonatomic, readonly) Reachability *internetConnection;
 
 /**
+ *  NetworkManager manager.
+ */
+@property (strong, nonatomic, readonly) QMNetworkManager *networkManager;
+
+
+/**
  *  Current profile.
  *
  *  @see QMProfile class.
@@ -74,6 +81,8 @@ QMContactListServiceDelegate
 + (instancetype)instance;
 
 - (BOOL)isInternetConnected;
+
+- (BOOL)isInternet;
 
 - (BFTask *)login;
 - (BFTask *)logout;

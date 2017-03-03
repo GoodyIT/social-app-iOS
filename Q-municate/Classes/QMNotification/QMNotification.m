@@ -76,6 +76,17 @@
                                        buttonHandler:buttonHandler];
 }
 
++ (void) showMessageNotificationWithTitle:(NSString*)title message: (NSString*) messageText avatarURL:(NSString*)avatarURL buttonHandler:(MPGNotificationButtonHandler)buttonHandler hostViewController:(UIViewController *)hvc
+{
+    UIImage *placeholderImage = [UIImage imageNamed:@"default"];
+    messageNotification().hostViewController = hvc;
+    [messageNotification() showNotificationWithTitle:title
+                                            subTitle:messageText
+                                        iconImageURL:[NSURL URLWithString:avatarURL]
+                                    placeholderImage:placeholderImage
+                                       buttonHandler:buttonHandler];
+}
+
 #pragma mark - Push notification
 
 + (BFTask *)sendPushNotificationToUser:(QBUUser *)user withText:(NSString *)text {
@@ -93,6 +104,42 @@
                                 @"ios_badge": @"1",
                                 @"ios_sound": @"default"
                                 };
+    
+    NSError *error = nil;
+    NSData *sendData = [NSJSONSerialization dataWithJSONObject:dictPush options:NSJSONWritingPrettyPrinted error:&error];
+    NSString *jsonString = [[NSString alloc] initWithData:sendData encoding:NSUTF8StringEncoding];
+    
+    event.message = jsonString;
+    
+    [QBRequest createEvent:event successBlock:^(QBResponse *__unused response, NSArray *__unused events) {
+        
+        [source setResult:nil];
+        
+    } errorBlock:^(QBResponse *response) {
+        
+        [source setError:response.error.error];
+    }];
+    
+    return source.task;
+}
+
++ (BFTask *)sendPushMessageToUser:(NSUInteger) userID withUserName:(NSString*)username withMessage:(QBChatMessage *)message
+{
+    BFTaskCompletionSource* source = [BFTaskCompletionSource taskCompletionSource];
+    
+    QBMEvent *event = [QBMEvent event];
+    event.notificationType = QBMNotificationTypePush;
+    event.usersIDs = [NSString stringWithFormat:@"%zd", userID];
+    event.type = QBMEventTypeOneShot;
+    
+    // custom params
+    NSDictionary  *dictPush = @{@"message" : [NSString stringWithFormat:@"%@: %@", username, message.text ],
+                                @"ios_badge": @"1",
+                                @"ios_sound": @"default",
+                                @"dialog_id": message.dialogID, // custom params
+                                @"user_id":  event.usersIDs // custom params
+                                };
+
     
     NSError *error = nil;
     NSData *sendData = [NSJSONSerialization dataWithJSONObject:dictPush options:NSJSONWritingPrettyPrinted error:&error];

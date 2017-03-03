@@ -143,7 +143,7 @@ NYTPhotosViewControllerDelegate
 #pragma mark - QMChatViewController data source overrides
 
 - (NSUInteger)senderID {
-      return [QMCore instance].currentProfile.userData.ID;
+    return [QMCore instance].currentProfile.userData.ID;
 }
 
 - (NSString *)senderDisplayName {
@@ -163,11 +163,6 @@ NYTPhotosViewControllerDelegate
 - (void)dealloc {
     
     ILog(@"%@ - %@",  NSStringFromSelector(_cmd), self);
-    
-    // removing left bar button item that is responsible for split view
-    // display mode managing. Not removing it will cause item update
-    // for deallocated navigation item
-    self.navigationItem.leftBarButtonItem = nil;
 }
 
 - (void)viewDidLoad {
@@ -286,6 +281,12 @@ NYTPhotosViewControllerDelegate
     [QMCore instance].activeDialogID = self.chatDialog.ID;
     
     @weakify(self);
+    [[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationDidEnterBackgroundNotification object:nil queue:nil usingBlock:^(NSNotification * _Nonnull __unused note) {
+        
+        @strongify(self);
+        [self.view endEditing:YES];
+    }];
+    
     self.observerWillResignActive = [[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationWillResignActiveNotification
                                                                                       object:nil
                                                                                        queue:nil
@@ -303,6 +304,8 @@ NYTPhotosViewControllerDelegate
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    
+    [self.view endEditing:YES];
     
     if (self.chatDialog == nil) {
         
@@ -414,7 +417,7 @@ NYTPhotosViewControllerDelegate
     
     if (self.chatDialog.type == QBChatDialogTypePrivate) {
         
-        if (![[QMCore instance].contactManager isFriendWithUserID:[self.chatDialog opponentID]]) {
+        if (![[QMCore instance].contactManager isCustomFriendWithUserID:[self.chatDialog opponentID]]) {
             
             [QMAlert showAlertWithMessage:NSLocalizedString(@"QM_STR_CANT_SEND_MESSAGES", nil) actionSuccess:NO inViewController:self];
             return NO;
@@ -431,7 +434,7 @@ NYTPhotosViewControllerDelegate
         return NO;
     }
     
-    if (![[QMCore instance].contactManager isFriendWithUserID:[self.chatDialog opponentID]]) {
+    if (![[QMCore instance].contactManager isCustomFriendWithUserID:[self.chatDialog opponentID]]) {
         
         [QMAlert showAlertWithMessage:NSLocalizedString(@"QM_STR_CANT_MAKE_CALLS", nil) actionSuccess:NO inViewController:self];
         return NO;
@@ -482,11 +485,18 @@ NYTPhotosViewControllerDelegate
                                                           senderID:senderId
                                                       chatDialogID:self.chatDialog.ID
                                                           dateSent:date];
-    
     // Sending message
     [self _sendMessage:message];
     
     [self finishSendingMessageAnimated:YES];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSString* myName = [QBSession currentSession].currentUser.fullName;
+//        QBContactListItem *contactListItem = [[QMCore instance].contactListService.contactListMemoryStorage contactListItemWithUserID:[self.chatDialog opponentID]];
+     //   if (!contactListItem.isOnline) {
+            [QMNotification sendPushMessageToUser:[self.chatDialog opponentID] withUserName:myName withMessage:message];
+    //    }
+    });    
 }
 
 - (void)didPressAccessoryButton:(UIButton *)sender {
@@ -497,7 +507,7 @@ NYTPhotosViewControllerDelegate
     }
     
     [self.inputToolbar.contentView.textView resignFirstResponder];
-
+    
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
     [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"QM_STR_TAKE_IMAGE", nil)
@@ -1121,6 +1131,9 @@ NYTPhotosViewControllerDelegate
 
 - (IBAction)onlineTitlePressed {
     
+    [self.view endEditing:YES];
+    [self.collectionView endEditing:YES];
+    
     if (self.chatDialog.type == QBChatDialogTypePrivate) {
         
         [self performInfoViewControllerForUserID:[self.chatDialog opponentID]];
@@ -1135,11 +1148,11 @@ NYTPhotosViewControllerDelegate
     
     // hiding keyboard due to layouting issue for iOS 8
     // if interface orientation would change out of the controller
-  //  [self.view endEditing:YES];
+    //  [self.view endEditing:YES];
     
     if ([segue.identifier isEqualToString:kQMSceneSegueUserInfo]) {
-        
-        QMUserInfoViewController *userInfoVC = segue.destinationViewController;
+        UINavigationController *chatNavigationController = segue.destinationViewController;
+        QMUserInfoViewController *userInfoVC = (QMUserInfoViewController *)chatNavigationController.topViewController;
         userInfoVC.user = sender;
     }
     else if ([segue.identifier isEqualToString:KQMSceneSegueGroupInfo]) {
@@ -1290,6 +1303,10 @@ NYTPhotosViewControllerDelegate
     
     self.groupAvatarImageView.frame = CGRectMake(0, 0, defaultSize, defaultSize);
 }
+- (IBAction)onBackAction:(id)__unused sender {
+    [self.view endEditing:YES];
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+}
 
 #pragma mark - Configuring
 
@@ -1298,13 +1315,21 @@ NYTPhotosViewControllerDelegate
     UIButton *audioButton = [QMChatButtonsFactory audioCall];
     [audioButton addTarget:self action:@selector(audioCallAction) forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *videoButton = [QMChatButtonsFactory videoCall];
-    [videoButton addTarget:self action:@selector(videoCallAction) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIBarButtonItem *videoCallBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:videoButton];
+//    UIButton *videoButton = [QMChatButtonsFactory videoCall];
+//    [videoButton addTarget:self action:@selector(videoCallAction) forControlEvents:UIControlEventTouchUpInside];
+//    
+//    UIBarButtonItem *videoCallBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:videoButton];
     UIBarButtonItem *audioCallBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:audioButton];
     
-    [self.navigationItem setRightBarButtonItems:@[videoCallBarButtonItem,  audioCallBarButtonItem] animated:YES];
+    [self.navigationItem setRightBarButtonItems:@[ audioCallBarButtonItem] animated:YES];
+    
+    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 13, 23)];
+    [backButton setBackgroundImage:[UIImage imageNamed:@"Back"] forState:UIControlStateNormal];
+    [backButton addTarget:self action:@selector(onBackAction:) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+    
+    [self.navigationItem setLeftBarButtonItems:@[backButtonItem] animated:YES];
 }
 
 - (void)configureGroupChatAvatar {
@@ -1359,9 +1384,9 @@ NYTPhotosViewControllerDelegate
     else {
         
         QBUUser *opponentUser = [[QMCore instance].usersService.usersMemoryStorage userWithID:[self.chatDialog opponentID]];
-        if (opponentUser && opponentUser.lastRequestAt) {
+        if (opponentUser && [self.chatDialog lastMessageDate]) {
             
-            status = [NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"QM_STR_LAST_SEEN", nil), [QMDateUtils formattedLastSeenString:opponentUser.lastRequestAt withTimePrefix:NSLocalizedString(@"QM_STR_TIME_PREFIX", nil)]];
+            status = [NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"QM_STR_LAST_SEEN", nil), [QMDateUtils formattedLastSeenString:[self.chatDialog lastMessageDate] withTimePrefix:NSLocalizedString(@"QM_STR_TIME_PREFIX", nil)]];
         }
         else {
             
@@ -1684,8 +1709,12 @@ NYTPhotosViewControllerDelegate
                     [self presentViewController:controller animated:true completion:nil];
                 }
             else {
-                
-                [[UIApplication sharedApplication] openURL:textCheckingResult.URL];
+                if ([[UIApplication sharedApplication] respondsToSelector:@selector(openURL:options:completionHandler:)]) {
+                    [[UIApplication sharedApplication] openURL:textCheckingResult.URL options:@{}
+                       completionHandler:nil];
+                } else {
+                    [[UIApplication sharedApplication] openURL:textCheckingResult.URL];
+                }
             }
             
             break;
@@ -1709,8 +1738,12 @@ NYTPhotosViewControllerDelegate
                                                               handler:^(UIAlertAction * _Nonnull __unused action) {
                                                                   
                                                                   NSString *urlString = [NSString stringWithFormat:@"tel:%@", textCheckingResult.phoneNumber];
-                                                                  NSURL *url = [NSURL URLWithString:urlString];
-                                                                  [[UIApplication sharedApplication] openURL:url];
+                                                                  NSURL *url = [NSURL URLWithString:urlString];                   if ([[UIApplication sharedApplication] respondsToSelector:@selector(openURL:options:completionHandler:)]) {
+                                                                      [[UIApplication sharedApplication] openURL:url options:@{}
+                                                                                               completionHandler:nil];
+                                                                  } else {
+                                                                      [[UIApplication sharedApplication] openURL:url];
+                                                                  }
                                                                   
                                                               }]];
             

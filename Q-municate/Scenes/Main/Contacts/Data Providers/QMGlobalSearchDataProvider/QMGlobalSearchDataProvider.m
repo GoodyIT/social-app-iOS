@@ -92,7 +92,9 @@ static const NSUInteger kQMUsersPageLimit = 50;
             self.shouldLoadMore = task.result.count >= kQMUsersPageLimit;
             
             NSMutableArray *sortedUsers = [[self sortUsersByFullname:task.result] mutableCopy];
+            NSArray* localUsers = [[QMNetworkManager sharedManager] getContacts];
             [sortedUsers removeObject:[QMCore instance].currentProfile.userData];
+            [sortedUsers removeObjectsInArray:localUsers];
             
             if (self.responsePage.currentPage > 1) {
                 
@@ -109,6 +111,19 @@ static const NSUInteger kQMUsersPageLimit = 50;
         return nil;
         
     } cancellationToken:self.globalSearchCancellationTokenSource.token];
+}
+
+- (NSArray*) getLocalUsersFromSearchResults: (NSMutableArray*) users
+{
+    NSMutableArray* filteredUsers = [NSMutableArray new];
+    for (QBUUser* user in users)
+    {
+        if ([[QMCore instance].contactManager isContactListItemExistentForUserWithID:user.ID]) {
+            [filteredUsers addObject:user];
+        }        
+    }
+    
+    return [filteredUsers copy];
 }
 
 #pragma mark - Methods

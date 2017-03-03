@@ -30,7 +30,7 @@ static const NSUInteger kQMPasswordMinChar = 8;
     // removing left bar button item that is responsible for split view
     // display mode managing. Not removing it will cause item update
     // for deallocated navigation item
-    self.navigationItem.leftBarButtonItem = nil;
+//    self.navigationItem.leftBarButtonItem = nil;
 }
 
 #pragma mark - Life cycle
@@ -39,8 +39,8 @@ static const NSUInteger kQMPasswordMinChar = 8;
     [super viewDidLoad];
     
     self.navigationItem.rightBarButtonItem.enabled = NO;
-    self.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
-    self.navigationItem.leftItemsSupplementBackButton = YES;
+//    self.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
+//    self.navigationItem.leftItemsSupplementBackButton = YES;
     
     // subscribing for delegate
     self.passwordOldField.delegate = self;

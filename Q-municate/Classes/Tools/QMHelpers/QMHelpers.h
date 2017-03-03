@@ -14,4 +14,8 @@ NSString *QMStringForTimeInterval(NSTimeInterval timeInterval);
 
 NSInteger iosMajorVersion();
 
+NSString* getTimeLog(NSString* date);
+
+CGFloat getLabelHeight(UILabel* label);
+
 extern void removeControllerFromNavigationStack(UINavigationController *navC, UIViewController *vc);

@@ -26,6 +26,8 @@
 
 #import <SVProgressHUD.h>
 
+
+
 typedef NS_ENUM(NSUInteger, QMSearchScopeButtonIndex) {
     
     QMSearchScopeButtonIndexLocal,
@@ -56,6 +58,8 @@ QMUsersServiceDelegate
 @property (strong, nonatomic) QMGlobalSearchDataSource *globalSearchDataSource;
 
 @property (weak, nonatomic) BFTask *addUserTask;
+
+@property (weak, nonatomic) BFTask *contactTask;
 
 @end
 
@@ -119,6 +123,10 @@ QMUsersServiceDelegate
     }
 }
 
+- (IBAction)dismissScreen:(id) __unused  sender {
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+}
+
 - (void)configureSearch {
     
     self.searchResultsController = [[QMSearchResultsController alloc] init];
@@ -159,7 +167,8 @@ QMUsersServiceDelegate
             return;
         }
         
-        [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+        [SVProgressHUD show];
+        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
         
         NSIndexPath *indexPath = [self.searchResultsController.tableView indexPathForCell:cell];
         QBUUser *user = self.globalSearchDataSource.items[indexPath.row];
@@ -205,9 +214,10 @@ QMUsersServiceDelegate
 #pragma mark - Update items
 
 - (void)updateItemsFromContactList {
-    
-    NSArray *friends = [[QMCore instance].contactManager friends];
+    NSArray *friends = [[QMNetworkManager sharedManager] getContacts];
+    NSLog(@"current contact list %@", friends);
     [self.dataSource replaceItems:friends];
+   
 }
 
 #pragma mark - UITableViewDelegate
@@ -252,16 +262,29 @@ QMUsersServiceDelegate
     
     self.tableView.dataSource = self.dataSource;
     [self updateItemsFromContactList];
-    
+    searchController.searchBar.selectedScopeButtonIndex = QMSearchScopeButtonIndexLocal;
     self.tabBarController.tabBar.hidden = NO;
+    
 }
 
 #pragma mark - UISearchBarDelegate
 
 - (void)searchBar:(UISearchBar *)__unused searchBar selectedScopeButtonIndexDidChange:(NSInteger)selectedScope {
+    if (selectedScope == QMSearchScopeButtonIndexLocal) {
+        searchBar.placeholder = @"";
+        if ([searchBar.text isEqualToString:@""]) {
+            self.tableView.dataSource = self.dataSource;
+        } else {
+            self.tableView.dataSource = self.contactsSearchDataSource;
+        }
+    } else if (selectedScope == QMSearchScopeButtonIndexGlobal) {
+        searchBar.placeholder = @"Please insert contact to search";
+        self.tableView.dataSource = self.globalSearchDataSource;
+    }
     
     [self updateDataSourceByScope:selectedScope];
     [self.searchResultsController performSearch:self.searchController.searchBar.text];
+    [self.tableView reloadData];
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)__unused searchBar {
@@ -340,6 +363,8 @@ QMUsersServiceDelegate
     
     [self.searchResultsController performSearch:searchController.searchBar.text];
 }
+
+
 
 #pragma mark - QMContactListServiceDelegate
 

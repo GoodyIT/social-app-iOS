@@ -98,15 +98,18 @@
 
 AVCaptureDevice * captureDeviceWithPosition(AVCaptureDevicePosition devicePosition) {
     
-    NSArray *devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
+//    NSArray *devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
+//    
+//    for (AVCaptureDevice *device in devices) {
+//        
+//        if (device.position == devicePosition) {
+//            
+//            return device;
+//        }
+//    }
     
-    for (AVCaptureDevice *device in devices) {
-        
-        if (device.position == devicePosition) {
-            
-            return device;
-        }
-    }
+    return [AVCaptureDevice defaultDeviceWithDeviceType:AVCaptureDeviceTypeBuiltInWideAngleCamera mediaType:AVMediaTypeVideo position:devicePosition];
+    
     
     return nil;
 }
@@ -480,7 +483,8 @@ AVCaptureDevice * captureDeviceWithPosition(AVCaptureDevicePosition devicePositi
     CMSampleTimingInfo info;
     CMSampleBufferGetSampleTimingInfo(sampleBuffer, 0, &info);
     
-    QBRTCVideoFrame *videoFrame = [[QBRTCVideoFrame alloc] initWithPixelBuffer:pixelBuffer];
+    QBRTCVideoFrame *videoFrame = [[QBRTCVideoFrame alloc] initWithPixelBuffer:pixelBuffer
+                                                                 videoRotation:QBRTCVideoRotation_0];
     int64_t timestamp = (int64_t)(CMTimeGetSeconds(info.presentationTimeStamp) * NSEC_PER_SEC);
     videoFrame.timestamp = timestamp;
     

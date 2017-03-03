@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CommentCell" rowHeight="115" id="KGk-i7-Jjw" customClass="CommentCell">
+            <rect key="frame" x="0.0" y="0.0" width="348" height="115"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <frame key="frameInset" width="348" height="114"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="David S" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JC8-sb-fVd">
+                        <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="14"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2 days ago" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4sB-os-aTv">
+                        <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="15"/>
+                        <color key="textColor" red="0.40784313729999999" green="0.40784313729999999" blue="0.34509803919999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EQs-Za-SwK">
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="22" id="6cR-QG-j4e"/>
+                            <constraint firstAttribute="width" secondItem="EQs-Za-SwK" secondAttribute="height" id="uSZ-Xb-UxM"/>
+                        </constraints>
+                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <state key="normal" backgroundImage="upvote-selected"/>
+                        <connections>
+                            <action selector="upVoteTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="BKg-Kb-FyE"/>
+                        </connections>
+                    </button>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5dN-LS-RNN">
+                        <color key="backgroundColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="G3d-U6-JDo"/>
+                        </constraints>
+                    </view>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JpC-77-JK2">
+                        <color key="backgroundColor" red="0.1019607843" green="0.75686274509999996" blue="0.97647058819999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="22" id="Shv-Kn-13e"/>
+                            <constraint firstAttribute="width" secondItem="JpC-77-JK2" secondAttribute="height" id="l9v-mF-kkr"/>
+                        </constraints>
+                        <state key="normal" backgroundImage="downvote-selected"/>
+                        <connections>
+                            <action selector="downVoteTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="la5-RY-GOL"/>
+                        </connections>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qGj-20-3r4">
+                        <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="16"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tep-G3-le6">
+                        <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="15"/>
+                        <state key="normal" title="Reply">
+                            <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="replyTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="h7j-lW-YIY"/>
+                        </connections>
+                    </button>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default.png" translatesAutoresizingMaskIntoConstraints="NO" id="okH-Cq-BXJ" customClass="QMImageView">
+                        <constraints>
+                            <constraint firstAttribute="width" constant="44" id="qUM-oJ-nMJ"/>
+                            <constraint firstAttribute="width" secondItem="okH-Cq-BXJ" secondAttribute="height" multiplier="1:1" id="vWB-PL-taW"/>
+                        </constraints>
+                    </imageView>
+                    <view contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="BFV-tG-ZLN">
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </subviews>
+                <color key="tintColor" red="0.0" green="0.75294117650000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                <constraints>
+                    <constraint firstItem="BFV-tG-ZLN" firstAttribute="leading" secondItem="JC8-sb-fVd" secondAttribute="leading" id="1rN-da-eBi"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="4sB-os-aTv" secondAttribute="trailing" id="51O-HU-p1k"/>
+                    <constraint firstItem="JC8-sb-fVd" firstAttribute="top" secondItem="okH-Cq-BXJ" secondAttribute="top" id="6m2-cX-OpD"/>
+                    <constraint firstItem="EQs-Za-SwK" firstAttribute="top" secondItem="BFV-tG-ZLN" secondAttribute="bottom" constant="8" id="7IM-yB-Ajx"/>
+                    <constraint firstItem="okH-Cq-BXJ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="8" id="8nh-I0-g2R"/>
+                    <constraint firstAttribute="bottom" secondItem="5dN-LS-RNN" secondAttribute="bottom" constant="1" id="9Cm-t7-0Oz"/>
+                    <constraint firstAttribute="trailing" secondItem="5dN-LS-RNN" secondAttribute="trailing" id="BHs-nO-fdm"/>
+                    <constraint firstItem="EQs-Za-SwK" firstAttribute="leading" secondItem="okH-Cq-BXJ" secondAttribute="trailing" constant="8" id="F7f-ga-BQE"/>
+                    <constraint firstItem="5dN-LS-RNN" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="12" id="Js3-5t-MFX"/>
+                    <constraint firstItem="JpC-77-JK2" firstAttribute="leading" secondItem="qGj-20-3r4" secondAttribute="trailing" constant="5" id="Vji-CS-mDm"/>
+                    <constraint firstItem="tep-G3-le6" firstAttribute="centerY" secondItem="JpC-77-JK2" secondAttribute="centerY" id="cFk-Z5-Tmc"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="EQs-Za-SwK" secondAttribute="bottom" constant="8" id="fPl-n4-301"/>
+                    <constraint firstItem="4sB-os-aTv" firstAttribute="centerY" secondItem="JC8-sb-fVd" secondAttribute="centerY" id="jCv-UQ-hSA"/>
+                    <constraint firstItem="tep-G3-le6" firstAttribute="leading" secondItem="JpC-77-JK2" secondAttribute="trailing" constant="14" id="k1w-a2-eAt"/>
+                    <constraint firstItem="4sB-os-aTv" firstAttribute="trailing" secondItem="BFV-tG-ZLN" secondAttribute="trailing" constant="12" id="n83-FH-nav"/>
+                    <constraint firstItem="EQs-Za-SwK" firstAttribute="centerY" secondItem="qGj-20-3r4" secondAttribute="centerY" id="oDU-ZV-0Zd"/>
+                    <constraint firstItem="qGj-20-3r4" firstAttribute="leading" secondItem="EQs-Za-SwK" secondAttribute="trailing" constant="5" id="oHo-p8-23t"/>
+                    <constraint firstItem="JC8-sb-fVd" firstAttribute="leading" secondItem="okH-Cq-BXJ" secondAttribute="trailing" constant="8" id="s8g-IP-2P8"/>
+                    <constraint firstItem="JpC-77-JK2" firstAttribute="centerY" secondItem="qGj-20-3r4" secondAttribute="centerY" id="t58-OV-75Y"/>
+                    <constraint firstItem="BFV-tG-ZLN" firstAttribute="top" secondItem="JC8-sb-fVd" secondAttribute="bottom" id="vkr-hM-Siw"/>
+                    <constraint firstItem="okH-Cq-BXJ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="yTJ-Gr-ZtN"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="commentTime" destination="4sB-os-aTv" id="gWh-XU-7WT"/>
+                <outlet property="commentView" destination="BFV-tG-ZLN" id="zZU-gQ-Ys6"/>
+                <outlet property="numberOfUpVoted" destination="qGj-20-3r4" id="KNQ-WY-fSp"/>
+                <outlet property="userAvatarImage" destination="okH-Cq-BXJ" id="jKn-vT-ZkR"/>
+                <outlet property="username" destination="JC8-sb-fVd" id="ZEO-5D-Ofu"/>
+            </connections>
+            <point key="canvasLocation" x="-532" y="-1094"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="default.png" width="128" height="128"/>
+        <image name="downvote-selected" width="24" height="24"/>
+        <image name="upvote-selected" width="24" height="24"/>
+    </resources>
+</document>

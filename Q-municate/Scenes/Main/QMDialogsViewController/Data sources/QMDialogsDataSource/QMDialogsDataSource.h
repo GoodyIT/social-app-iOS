@@ -14,6 +14,8 @@
 @protocol QMDialogsDataSourceDelegate <NSObject>
 
 - (void)dialogsDataSource:(QMDialogsDataSource *)dialogsDataSource commitDeleteDialog:(QBChatDialog *)chatDialog;
+@optional
+-(void)imageviewTapped: (NSInteger) tag;
 
 @end
 

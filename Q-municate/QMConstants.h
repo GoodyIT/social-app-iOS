@@ -19,6 +19,8 @@
 
 #endif
 
+static NSString *const kQBPassword = @"reachanonymous";
+
 // storyboards
 static NSString *const kQMMainStoryboard = @"Main";
 static NSString *const kQMChatStoryboard = @"Chat";
@@ -31,6 +33,11 @@ static NSString *const kQMDialogsUpdateNotificationMessage = @"Notification mess
 static NSString *const kQMContactRequestNotificationMessage = @"Contact request";
 static NSString *const kQMLocationNotificationMessage = @"Location";
 static NSString *const kQMCallNotificationMessage = @"Call notification";
+
+/**
+ *  EditDialogTableViewController
+ */
+static NSString *const kGoToChatSegueIdentifier = @"goToChat";
 
 static const CGFloat kQMBaseAnimationDuration = 0.2f;
 static const CGFloat kQMSlashAnimationDuration = 0.1f;

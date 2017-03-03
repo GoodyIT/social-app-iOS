@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NotificationCell" rowHeight="91" id="KGk-i7-Jjw" userLabel="NotificationCell" customClass="NotificationCell">
+            <rect key="frame" x="0.0" y="0.0" width="420" height="91"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <frame key="frameInset" width="420" height="90"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="David S" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JC8-sb-fVd">
+                        <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="14"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2 days ago" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4sB-os-aTv" userLabel="Notification Time">
+                        <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="15"/>
+                        <color key="textColor" red="0.40784313729999999" green="0.40784313729999999" blue="0.34509803919999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default.png" translatesAutoresizingMaskIntoConstraints="NO" id="okH-Cq-BXJ" customClass="QMImageView">
+                        <constraints>
+                            <constraint firstAttribute="width" constant="55" id="qUM-oJ-nMJ"/>
+                            <constraint firstAttribute="width" secondItem="okH-Cq-BXJ" secondAttribute="height" multiplier="1:1" id="vWB-PL-taW"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                <real key="value" value="0.0"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <real key="value" value="27.5"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </imageView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Xi-hG-zet">
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="NHn-Re-Zxn"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="BFV-tG-ZLN" userLabel="Notification View">
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yWT-rG-Gg0">
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="yWT-rG-Gg0" secondAttribute="height" multiplier="16:15" id="ZdI-8q-CNg"/>
+                            <constraint firstAttribute="height" constant="15" id="wdL-HH-1jU"/>
+                        </constraints>
+                        <state key="normal" image="Like_red.png"/>
+                    </button>
+                </subviews>
+                <color key="tintColor" red="0.0" green="0.75294117650000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                <constraints>
+                    <constraint firstItem="JC8-sb-fVd" firstAttribute="top" secondItem="okH-Cq-BXJ" secondAttribute="top" id="2KS-rQ-0hI"/>
+                    <constraint firstAttribute="trailing" secondItem="7Xi-hG-zet" secondAttribute="trailing" id="5If-R5-1lk"/>
+                    <constraint firstItem="yWT-rG-Gg0" firstAttribute="centerY" secondItem="okH-Cq-BXJ" secondAttribute="bottom" constant="-13" id="I2O-ve-cUz"/>
+                    <constraint firstItem="okH-Cq-BXJ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="5" id="JLS-Ty-IOv"/>
+                    <constraint firstItem="JC8-sb-fVd" firstAttribute="leading" secondItem="okH-Cq-BXJ" secondAttribute="trailing" constant="8" id="QVY-zG-Voj"/>
+                    <constraint firstItem="7Xi-hG-zet" firstAttribute="top" relation="greaterThanOrEqual" secondItem="okH-Cq-BXJ" secondAttribute="bottom" constant="8" id="Qfw-DT-ljH"/>
+                    <constraint firstItem="4sB-os-aTv" firstAttribute="trailing" secondItem="BFV-tG-ZLN" secondAttribute="trailing" id="Utv-oq-RwU"/>
+                    <constraint firstAttribute="bottom" secondItem="7Xi-hG-zet" secondAttribute="bottom" constant="1" id="VUl-6i-kd2"/>
+                    <constraint firstItem="okH-Cq-BXJ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="18" id="kyI-0x-9TF"/>
+                    <constraint firstItem="BFV-tG-ZLN" firstAttribute="top" secondItem="4sB-os-aTv" secondAttribute="bottom" constant="5" id="r7g-xV-HGh"/>
+                    <constraint firstItem="7Xi-hG-zet" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="12" id="rqO-7T-6fI"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="4sB-os-aTv" secondAttribute="trailing" constant="8" id="s9b-uG-L61"/>
+                    <constraint firstItem="7Xi-hG-zet" firstAttribute="top" secondItem="BFV-tG-ZLN" secondAttribute="bottom" constant="8" id="to1-I6-leb"/>
+                    <constraint firstItem="4sB-os-aTv" firstAttribute="top" secondItem="JC8-sb-fVd" secondAttribute="top" id="vN4-XP-hUP"/>
+                    <constraint firstItem="yWT-rG-Gg0" firstAttribute="centerX" secondItem="okH-Cq-BXJ" secondAttribute="trailing" constant="-8" id="xPf-Gz-7hf"/>
+                    <constraint firstItem="JC8-sb-fVd" firstAttribute="leading" secondItem="BFV-tG-ZLN" secondAttribute="leading" constant="-12" id="xzc-DH-UyY"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="notificationTime" destination="4sB-os-aTv" id="Shp-1X-uTp"/>
+                <outlet property="notificationTypeBtn" destination="yWT-rG-Gg0" id="xA9-us-Y1I"/>
+                <outlet property="notificationView" destination="BFV-tG-ZLN" id="Ks2-Wd-tYF"/>
+                <outlet property="userAvatarImage" destination="okH-Cq-BXJ" id="fan-Ia-ddv"/>
+                <outlet property="username" destination="JC8-sb-fVd" id="zQ2-ee-hE5"/>
+            </connections>
+            <point key="canvasLocation" x="-610" y="-1916.5"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="Like_red.png" width="36" height="34"/>
+        <image name="default.png" width="128" height="128"/>
+    </resources>
+</document>

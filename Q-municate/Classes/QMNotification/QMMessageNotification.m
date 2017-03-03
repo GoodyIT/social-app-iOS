@@ -77,9 +77,11 @@ const CGRect QMMessageNotificationIconRect = (CGRect){(CGPoint){0,0}, (CGSize){3
     self.messageNotification.autoresizingMask =
     self.messageNotification.backgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     self.messageNotification.fullWidthMessages = YES;
+    self.messageNotification.backgroundTapsEnabled = YES;
     
     self.messageNotification.hostViewController = self.hostViewController;
     [self.messageNotification show];
 }
+
 
 @end

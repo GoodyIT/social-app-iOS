@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16B2657" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="2w8-ii-cSh">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Edit Journal-->
+        <scene sceneID="Jds-rQ-2eP">
+            <objects>
+                <viewController id="uJn-LA-0z3" customClass="JournalEditViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="u7e-gN-b1R"/>
+                        <viewControllerLayoutGuide type="bottom" id="fyw-9b-NYL"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="aYe-Oa-Vyi">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="6kb-uS-Uwh">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="6kb-uS-Uwh" firstAttribute="leading" secondItem="aYe-Oa-Vyi" secondAttribute="leading" id="F4X-oE-gZW"/>
+                            <constraint firstAttribute="bottom" secondItem="6kb-uS-Uwh" secondAttribute="bottom" id="q5m-nQ-k3T"/>
+                            <constraint firstAttribute="trailing" secondItem="6kb-uS-Uwh" secondAttribute="trailing" id="v8l-1S-ePg"/>
+                            <constraint firstItem="6kb-uS-Uwh" firstAttribute="top" secondItem="aYe-Oa-Vyi" secondAttribute="top" id="zP2-m7-tcM"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Edit Journal" id="Vcx-IX-N3J">
+                        <barButtonItem key="leftBarButtonItem" image="Back.png" id="4cG-b1-5y2">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="onBack:" destination="uJn-LA-0z3" id="1EL-uw-4pG"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="contentView" destination="6kb-uS-Uwh" id="C2y-If-exr"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qfM-wC-ieH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2292" y="-53"/>
+        </scene>
+        <!--Base Navigation Controller-->
+        <scene sceneID="msE-Zh-XnM">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="2w8-ii-cSh" customClass="BaseNavigationController" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="HbT-Zh-dQW">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <textAttributes key="titleTextAttributes">
+                            <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="21"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Vx5-4r-xKs" kind="relationship" relationship="rootViewController" id="zHI-6L-XTR"/>
+                        <segue destination="M5E-Mh-BZK" kind="show" identifier="ChatNavigation" id="0MT-gV-lJg"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="skP-28-a8u" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="721" y="-47"/>
+        </scene>
+        <!--QMChatVC-->
+        <scene sceneID="Rog-mF-jXt">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Main" referencedIdentifier="QMChatVC" id="M5E-Mh-BZK" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gE4-7M-cIb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1306" y="-449"/>
+        </scene>
+        <!--Journal-->
+        <scene sceneID="aLg-4j-Yb7">
+            <objects>
+                <viewController id="Vx5-4r-xKs" customClass="JournalViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="mzq-kg-QFe"/>
+                        <viewControllerLayoutGuide type="bottom" id="5yP-eM-cr1"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="h7U-rc-gNd">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="50" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="BxW-re-5qV">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="Vx5-4r-xKs" id="pjc-dh-A1L"/>
+                                    <outlet property="delegate" destination="Vx5-4r-xKs" id="pE8-FE-qnq"/>
+                                </connections>
+                            </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oTy-vJ-V2E" userLabel="bottom view">
+                                <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="20 Notes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oWH-Qn-k2X">
+                                        <rect key="frame" x="152.5" y="12" width="70" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="oWH-Qn-k2X" firstAttribute="centerY" secondItem="oTy-vJ-V2E" secondAttribute="centerY" id="Yql-Uy-3L9"/>
+                                    <constraint firstItem="oWH-Qn-k2X" firstAttribute="centerX" secondItem="oTy-vJ-V2E" secondAttribute="centerX" id="dQf-aR-mgt"/>
+                                    <constraint firstAttribute="height" constant="44" id="txK-AK-HbP"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="BxW-re-5qV" firstAttribute="trailing" secondItem="h7U-rc-gNd" secondAttribute="trailing" id="07M-B8-bBj"/>
+                            <constraint firstItem="BxW-re-5qV" firstAttribute="bottom" secondItem="oTy-vJ-V2E" secondAttribute="top" id="2WX-T7-h0E"/>
+                            <constraint firstItem="oTy-vJ-V2E" firstAttribute="leading" secondItem="h7U-rc-gNd" secondAttribute="leading" id="94m-a6-cFv"/>
+                            <constraint firstItem="BxW-re-5qV" firstAttribute="leading" secondItem="h7U-rc-gNd" secondAttribute="leading" id="RQb-UM-p6i"/>
+                            <constraint firstItem="BxW-re-5qV" firstAttribute="top" secondItem="h7U-rc-gNd" secondAttribute="top" id="jkg-y6-uJT"/>
+                            <constraint firstItem="oTy-vJ-V2E" firstAttribute="trailing" secondItem="h7U-rc-gNd" secondAttribute="trailing" id="pYH-uV-NNB"/>
+                            <constraint firstItem="5yP-eM-cr1" firstAttribute="top" secondItem="oTy-vJ-V2E" secondAttribute="bottom" id="sk8-Sr-sWf"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Journal" id="rVt-TP-npC">
+                        <barButtonItem key="leftBarButtonItem" image="Back.png" id="Ftj-a1-ItW">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="onBackAction:" destination="Vx5-4r-xKs" id="aKc-Yy-0CT"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" image="add" id="Wek-4y-Hk2">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="onNewJournalAction:" destination="Vx5-4r-xKs" id="Rbp-2Z-yay"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="countLabel" destination="oWH-Qn-k2X" id="zxC-Qd-Qae"/>
+                        <outlet property="tableViewObject" destination="BxW-re-5qV" id="U2A-dT-KXb"/>
+                        <segue destination="uJn-LA-0z3" kind="show" identifier="EditJournalSegue" id="d3C-3v-nsE"/>
+                        <segue destination="cFf-K5-rdO" kind="show" identifier="CustomChat" id="xT6-M9-7kP"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oO5-Us-qKg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1564" y="-54"/>
+        </scene>
+        <!--QMChatVC-->
+        <scene sceneID="PuL-Ms-xsw">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Main" referencedIdentifier="QMChatVC" id="cFf-K5-rdO" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tzZ-0z-L5v" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1690" y="360"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="Back.png" width="13" height="23"/>
+        <image name="add" width="16" height="16"/>
+    </resources>
+</document>

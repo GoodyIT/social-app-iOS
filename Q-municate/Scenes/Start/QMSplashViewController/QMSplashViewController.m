@@ -16,11 +16,31 @@
 }
 
 - (void)viewDidLoad {
-    
     [super viewDidLoad];
     
-    [self performSegueWithIdentifier:[QMCore instance].currentProfile.userData != nil ? kQMSceneSegueMain : kQMSceneSegueAuth
-                              sender:nil];
+    if ([QMCore instance].currentProfile.userData == nil || [[TokenModel sharedInstance].token isEqualToString:@""])
+    {
+        [self performSegueWithIdentifier:kQMSceneSegueAuth
+                                  sender:nil];
+    } else {
+        [[[[QMNetworkManager sharedManager] updateAndGetUserWithCompletion] continueWithBlock:^id _Nullable(BFTask * _Nonnull t) {
+            if (!t.isFaulted) {
+                [QMNetworkManager sharedManager].myProfile = [UserModel getUserWithResponce:[t.result objectForKey:@"user"]];
+            }
+            
+            return t;
+        }] continueWithBlock:^id _Nullable(BFTask * _Nonnull __unused task1) {
+            [[[QMCore instance] login] continueWithBlock:^id _Nullable(BFTask * _Nonnull __unused task) {
+                
+                [self performSegueWithIdentifier:[QMCore instance].currentProfile.userData != nil && ![[TokenModel sharedInstance].token isEqualToString:@""] ? kQMSceneSegueMain : kQMSceneSegueAuth
+                                          sender:nil];
+                
+                return [BFTask cancelledTask];
+                
+            }];
+            
+            return nil;
+        }];
+    }
 }
-
 @end

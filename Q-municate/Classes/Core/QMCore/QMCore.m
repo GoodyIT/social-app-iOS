@@ -14,6 +14,11 @@
 #import <DigitsKit/DigitsKit.h>
 #import <SVProgressHUD.h>
 #import <SDWebImageManager.h>
+#import "QMCallManager.h"
+#import "QMCallManager.h"
+#import <Intents/Intents.h>
+#import "NSString+QMTransliterating.h"
+#import "QMHelpers.h"
 
 static NSString *const kQMLastActivityDateKey = @"last_activity_date";
 static NSString *const kQMErrorKey = @"errors";
@@ -24,6 +29,7 @@ static NSString *const kQMContactListCacheNameKey = @"q-municate-contacts";
 @interface QMCore ()
 
 @property (strong, nonatomic) BFTask *restLoginTask;
+@property (strong, nonatomic) NSMutableOrderedSet *cachedVocabularyStrings;
 
 @end
 
@@ -56,6 +62,9 @@ static NSString *const kQMContactListCacheNameKey = @"q-municate-contacts";
         // Users cache init
         [self.usersService loadFromCache];
         
+        // Vocabulary string cache init
+        _cachedVocabularyStrings = [NSMutableOrderedSet orderedSet];
+        
         // managers
         _contactManager = [[QMContactManager alloc] initWithServiceManager:self];
         _chatManager = [[QMChatManager alloc] initWithServiceManager:self];
@@ -64,6 +73,7 @@ static NSString *const kQMContactListCacheNameKey = @"q-municate-contacts";
         
         // Reachability init
         [self configureReachability];
+        [self.chatService addDelegate:self];
     }
     
     return self;
@@ -129,12 +139,16 @@ static NSString *const kQMContactListCacheNameKey = @"q-municate-contacts";
     [mutableString deleteCharactersInRange:NSMakeRange(mutableString.length - 2, 2)];
 }
 
+- (NSString *)appGroupIdentifier {
+    return @"group.com.quickblox.qmunicate";
+}
+
 - (void)handleErrorResponse:(QBResponse *)response {
     NSAssert(!response.success, @"Error handling is valid only for unsuccessful response.");
     
     NSString *errorMessage = nil;
     
-    if (![self isInternetConnected]) {
+    if (![self isInternet]) {
         
         errorMessage = NSLocalizedString(@"QM_STR_CHECK_INTERNET_CONNECTION", nil);
     }
@@ -172,7 +186,10 @@ static NSString *const kQMContactListCacheNameKey = @"q-municate-contacts";
         }
     }
     
-    [SVProgressHUD showErrorWithStatus:errorMessage];
+    if (![errorMessage isEqualToString:@""])
+    {
+         [SVProgressHUD showErrorWithStatus:errorMessage];
+    }
 }
 
 #pragma mark - Auth methods
@@ -246,6 +263,8 @@ static NSString *const kQMContactListCacheNameKey = @"q-municate-contacts";
     
     BFTaskCompletionSource *source = [BFTaskCompletionSource taskCompletionSource];
     
+    [[TokenModel sharedInstance] clearToken];
+    
     @weakify(self);
     [[self.pushNotificationManager unSubscribeFromPushNotifications] continueWithBlock:^id _Nullable(BFTask * _Nonnull __unused t) {
         
@@ -300,6 +319,20 @@ static NSString *const kQMContactListCacheNameKey = @"q-municate-contacts";
 - (BOOL)isInternetConnected {
     
     return [self.internetConnection isReachable];
+}
+
+- (BOOL)isInternet
+{
+    Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
+    NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
+    if (networkStatus == NotReachable)
+    {
+        return NO;
+    }
+    else
+    {
+        return YES;
+    }
 }
 
 - (BOOL)sessionTokenHasExpiredOrNeedCreate {

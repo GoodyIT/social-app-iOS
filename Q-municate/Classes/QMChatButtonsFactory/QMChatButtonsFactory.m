@@ -13,8 +13,8 @@
 + (UIButton *)audioCall {
     
     UIButton *audioButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    audioButton.frame = CGRectMake(0, 0, 30, 40);
-    [audioButton setImage:[UIImage imageNamed:@"ic_audio_call"] forState:UIControlStateNormal];
+    audioButton.frame = CGRectMake(0, 0, 30, 30);
+    [audioButton setImage:[UIImage imageNamed:@"phone-icon"] forState:UIControlStateNormal];
     return audioButton;
 }
 

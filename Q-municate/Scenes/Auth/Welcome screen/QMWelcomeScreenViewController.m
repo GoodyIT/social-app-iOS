@@ -23,15 +23,46 @@ static NSString * const kQMFacebookIDField = @"id";
 
 @implementation QMWelcomeScreenViewController
 
+-(BOOL)prefersStatusBarHidden{
+    return YES;
+}
+
+- (void)awakeFromNib
+{
+    [super awakeFromNib];
+    
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+}
+
 - (void)dealloc {
     
     ILog(@"%@ - %@",  NSStringFromSelector(_cmd), self);
 }
 
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
+    [self prepareUI];
+}
+
 - (void)viewWillAppear:(BOOL)animated {
-    
     [super viewWillAppear:animated];
-    [self.navigationController setNavigationBarHidden:YES animated:animated];
+}
+
+- (void)prepareUI {
+    //    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.0866 green:0.6965 blue:0.9986 alpha:1.0];
+    //        self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    self.navigationController.navigationBar.barTintColor = [UIColor clearColor];
+    self.navigationController.navigationBar.tintColor = [UIColor clearColor];
+    
+    
+    [self.navigationController.navigationBar
+     setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+    self.navigationController.navigationBar.translucent = NO;
+    
+    self.view.backgroundColor = [UIColor colorWithGradientStyle:UIGradientStyleRadial withFrame:self.view.frame andColors:@[[UIColor gradeintBackStart], [UIColor gradeintBackEnd]]];
+    self.loginBtn.layer.borderColor = [UIColor babyBule].CGColor;
+    self.registerBtn.layer.borderColor = [UIColor babyBule].CGColor;
 }
 
 #pragma mark - Actions
@@ -95,7 +126,8 @@ static NSString * const kQMFacebookIDField = @"id";
             return nil;
         }
         
-        [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+        [SVProgressHUD show];
+        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
         
         return [[QMCore instance].authService loginWithFacebookSessionToken:task.result];
         
@@ -154,7 +186,8 @@ static NSString * const kQMFacebookIDField = @"id";
                 return;
             }
             
-            [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+            [SVProgressHUD show];
+            [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
             
             [[[QMCore instance].authService loginWithTwitterDigitsAuthHeaders:authHeaders] continueWithBlock:^id _Nullable(BFTask<QBUUser *> * _Nonnull task) {
                 

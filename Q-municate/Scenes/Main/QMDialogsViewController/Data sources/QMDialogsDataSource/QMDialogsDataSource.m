@@ -27,6 +27,11 @@
     QBChatDialog *chatDialog = self.items[indexPath.row];
     
     if (chatDialog.type == QBChatDialogTypePrivate) {
+        cell.avatarImage.tag = indexPath.row;
+        
+        UITapGestureRecognizer *tapped = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewClick:)];
+        tapped.numberOfTapsRequired = 1;
+        [cell.avatarImage addGestureRecognizer:tapped];
         
         QBUUser *recipient = [[QMCore instance].usersService.usersMemoryStorage userWithID:[chatDialog opponentID]];
         
@@ -38,6 +43,9 @@
             
             [cell setTitle:NSLocalizedString(@"QM_STR_UNKNOWN_USER", nil) placeholderID:[chatDialog opponentID] avatarUrl:nil];
         }
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"fetchAllDialog" object:nil];
+        
     } else {
         
         [cell setTitle:chatDialog.name placeholderID:chatDialog.ID.hash avatarUrl:chatDialog.photo];
@@ -55,6 +63,12 @@
     return cell;
 }
 
+-(void)imageViewClick :(id) sender
+ {
+    UITapGestureRecognizer *gesture = (UITapGestureRecognizer *) sender;
+    [self.delegate imageviewTapped:gesture.view.tag];
+ }
+
 - (BOOL)tableView:(UITableView *)__unused tableView canEditRowAtIndexPath:(NSIndexPath *)__unused indexPath {
     
     return YES;
@@ -70,8 +84,20 @@
 }
 
 - (NSMutableArray *)items {
+    return [self getDialogsOnly:[[[QMCore instance].chatService.dialogsMemoryStorage dialogsSortByLastMessageDateWithAscending:NO] mutableCopy]];
+}
+
+- (NSMutableArray*) getDialogsOnly: (NSMutableArray*) dialogs
+{
+    NSMutableArray* requests = [NSMutableArray new];
+    for (QBChatDialog *temp in dialogs) {
+        if (![temp.lastMessageText containsString:@"Contact"])
+        {
+            [requests addObject:temp];
+        }
+    }
     
-    return [[[QMCore instance].chatService.dialogsMemoryStorage dialogsSortByLastMessageDateWithAscending:NO] mutableCopy];
+    return requests;
 }
 
 @end

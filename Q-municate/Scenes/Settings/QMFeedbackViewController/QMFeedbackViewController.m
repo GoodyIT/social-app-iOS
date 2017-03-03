@@ -52,8 +52,8 @@ typedef NS_ENUM(NSUInteger, QMFeedbackSelection) {
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
-    self.navigationItem.leftItemsSupplementBackButton = YES;
+//    self.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
+//    self.navigationItem.leftItemsSupplementBackButton = YES;
     
     // Hide empty separators
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];

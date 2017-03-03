@@ -44,6 +44,7 @@ NS_ASSUME_NONNULL_BEGIN
                  placeholderImage:(nullable UIImage *)placeholderImage
                     buttonHandler:(nullable MPGNotificationButtonHandler)buttonHandler;
 
+
 @end
 
 NS_ASSUME_NONNULL_END

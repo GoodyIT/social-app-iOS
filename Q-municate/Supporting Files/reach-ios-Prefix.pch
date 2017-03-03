@@ -1,0 +1,81 @@
+//
+//  Prefix header
+//
+//  The contents of this file are implicitly included at the beginning of every source file.
+//
+
+#import <Availability.h>
+
+#ifndef __IPHONE_3_0
+#warning "This project uses features only available in iOS SDK 3.0 and later."
+#endif
+
+
+#ifdef __OBJC__
+    #import <UIKit/UIKit.h>
+    #import <Foundation/Foundation.h>
+    #import <SystemConfiguration/SystemConfiguration.h>
+    #import <MobileCoreServices/MobileCoreServices.h>
+    #import <Quickblox/Quickblox.h>
+    #import <QuickbloxWebRTC/QuickbloxWebRTC.h>
+
+    #import "QBUpdateUserParameters+CustomData.h"
+    #import "UIViewController+SmartDeselection.h"
+    #import "UIScrollView+EmptyDataSet.h"
+
+    #import "SegueIdentifiers.h"
+    #import "QMConstants.h"
+
+    #import <QMServices.h>
+    #import <EXTScope.h>
+    #import <EXTKeyPathCoding.h>
+    #import "SVProgressHUD.h"
+#import <STPopup/STPopup.h>
+#import <CoreLocation/CoreLocation.h>
+#import "SDWebImageManager.h"
+#import "RKNotificationHub.h"
+#import <CCBottomRefreshControl/UIScrollView+BottomRefreshControl.h>
+#import <UIImagePickerController+Edit.h>
+#import "QMTasks.h"
+#import "KILabel.h"
+#import "Masonry.h"
+
+#import "Mixpanel/Mixpanel.h"
+
+    #import "SelfSizingWaterfallCollectionViewLayout.h"
+
+    #import "QMAppDelegate.h"
+    #import "BaseViewController.h"
+    #import <ChameleonFramework/Chameleon.h>
+    #import "UIColor+CustomColors.h"
+    #import "NetworkErrors.h"
+    #import "NetworkManagerConstants.h"
+    #import "PushManager.h"
+    #import "MyPostDetailViewController.h"
+
+#import "QMCore.h"
+#import "QMNetworkManager.h"
+#import "DataManager.h"
+#import "XPageManager.h"
+#import "UINavigationController+QMNotification.h"
+#import "QMChatVC.h"
+#import "QMNotification.h"
+#import "QMSoundManager.h"
+#import "QBChatDialog+OpponentID.h"
+#import "QMHelpers.h"
+#import "CustomViewController.h"
+#import "QMNavigationBar.h"
+
+#import "PostModel.h"
+#import "UserModel.h"
+#import "CommentModel.h"
+#import "HashtagModel.h"
+#import "TokenModel.h"
+#import "NotificationModel.h"
+#import "GroupModel.h"
+#import "TopicModel.h"
+#import "CategoryModel.h"
+#import "TopicCommentModel.h"
+#import "GroupNotificationModel.h"
+
+#endif

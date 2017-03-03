@@ -15,7 +15,7 @@
 /**
  *  Outlets
  */
-@property (weak, nonatomic) IBOutlet QMImageView *avatarImage;
+
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *bodyLabel;
 
@@ -56,6 +56,7 @@
     [super awakeFromNib];
     
     _avatarImage.imageViewType = QMImageViewTypeCircle;
+    _avatarImage.userInteractionEnabled = YES;
     _titleLabel.text = nil;
     _bodyLabel.text = nil;
 }

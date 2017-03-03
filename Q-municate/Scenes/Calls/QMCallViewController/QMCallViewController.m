@@ -313,8 +313,29 @@ QMCallManagerDelegate
                 sender.userInteractionEnabled = NO;
                 [[QMCore instance].callManager stopAllSounds];
                 
-                QBRTCSoundRoute soundRoute = self.session.conferenceType == QBRTCConferenceTypeVideo ? QBRTCSoundRouteSpeaker : QBRTCSoundRouteReceiver;
-                [[QBRTCSoundRouter instance] setCurrentSoundRoute:soundRoute];
+//                QBRTCSoundRoute soundRoute = self.session.conferenceType == QBRTCConferenceTypeVideo ? QBRTCSoundRouteSpeaker : QBRTCSoundRouteReceiver;
+//                [[QBRTCSoundRouter instance] setCurrentSoundRoute:soundRoute];
+                
+                //Save current audio configuration before start call or accept call
+                [[QBRTCAudioSession instance] initialize];
+                //OR you can initialize audio session with a specific configuration
+                [[QBRTCAudioSession instance] initializeWithConfigurationBlock:^(QBRTCAudioSessionConfiguration *configuration) {
+                    // adding blutetooth support
+                    configuration.categoryOptions |= AVAudioSessionCategoryOptionAllowBluetooth;
+                    configuration.categoryOptions |= AVAudioSessionCategoryOptionAllowBluetoothA2DP;
+                    
+                    // adding airplay support
+                    configuration.categoryOptions |= AVAudioSessionCategoryOptionAllowAirPlay;
+                    
+                    [QBRTCAudioSession instance].currentAudioDevice = QBRTCAudioDeviceReceiver;
+                    
+                    if (self.session.conferenceType == QBRTCConferenceTypeVideo) {
+                        // setting mode to video chat to enable airplay audio and speaker only for video call
+                        configuration.mode = AVAudioSessionModeVideoChat;
+                    }
+                }];
+                
+                [QBRTCAudioSession instance].currentAudioDevice = self.session.conferenceType == QBRTCConferenceTypeVideo ? QBRTCAudioDeviceSpeaker : QBRTCAudioDeviceReceiver;
                 
                 self.callState = QMCallStateActiveAudioCall;
                 [self configureCallController];
@@ -418,15 +439,17 @@ QMCallManagerDelegate
     
     UIButton *speakerButton = [QMCallButtonsFactory speakerButton];
     
-    QBRTCSoundRouter *router = [QBRTCSoundRouter instance];
-    speakerButton.selected = router.currentSoundRoute == QBRTCSoundRouteSpeaker;
+//    QBRTCSoundRouter *router = [QBRTCSoundRouter instance];
+    speakerButton.selected = [QBRTCAudioSession instance].currentAudioDevice == QBRTCAudioDeviceSpeaker;
     
     [self.toolbar addButton:speakerButton action:^(UIButton * _Nonnull sender) {
         
-        QBRTCSoundRoute newRoute = router.currentSoundRoute == QBRTCSoundRouteSpeaker ? QBRTCSoundRouteReceiver : QBRTCSoundRouteSpeaker;
-        router.currentSoundRoute = newRoute;
+//        QBRTCSoundRoute newRoute = router.currentSoundRoute == QBRTCSoundRouteSpeaker ? QBRTCSoundRouteReceiver : QBRTCSoundRouteSpeaker;
+//        router.currentSoundRoute = newRoute;
         
-        sender.selected = newRoute == QBRTCSoundRouteSpeaker;
+        [QBRTCAudioSession instance].currentAudioDevice = [QBRTCAudioSession instance].currentAudioDevice == QBRTCAudioDeviceSpeaker ? QBRTCAudioDeviceReceiver : QBRTCAudioDeviceSpeaker;
+        
+        sender.selected = [QBRTCAudioSession instance].currentAudioDevice == QBRTCAudioDeviceSpeaker;
     }];
 }
 

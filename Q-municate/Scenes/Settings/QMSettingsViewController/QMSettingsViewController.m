@@ -24,6 +24,8 @@
 static const CGFloat kQMDefaultSectionHeaderHeight = 24.0f;
 static const CGFloat kQMStatusSectionHeaderHeight = 40.0f;
 
+
+
 typedef NS_ENUM(NSUInteger, QMSettingsSection) {
     
     QMSettingsSectionFullName,

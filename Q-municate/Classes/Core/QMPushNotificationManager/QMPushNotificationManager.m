@@ -111,7 +111,7 @@
     
     NSString *dialogID = self.pushNotification[kQMPushNotificationDialogIDKey];
     if (dialogID == nil) {
-        NSAssert(nil, @"Push notification should contain dialog ID in user info.");
+//        NSAssert(nil, @"Push notification should contain dialog ID in user info.");
         return;
     }
     

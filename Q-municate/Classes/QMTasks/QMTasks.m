@@ -155,8 +155,7 @@ static const NSUInteger kQMDialogsPageLimit = 10;
         
         return [[[QMCore instance].chatService fetchDialogsUpdatedFromDate:lastDialogsFetchingDate andPageLimit:kQMDialogsPageLimit iterationBlock:iterationBlock] continueWithBlock:completionBlock];
     }
-    else {
-        
+    else {        
         return [[[QMCore instance].chatService allDialogsWithPageLimit:kQMDialogsPageLimit extendedRequest:nil iterationBlock:iterationBlock] continueWithBlock:completionBlock];
     }
 }

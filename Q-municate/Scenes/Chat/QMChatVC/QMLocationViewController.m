@@ -87,10 +87,36 @@ static const CGFloat kQMLocationPinXShift = 3.5f;
     
     _mapView = [[QMMapView alloc] initWithFrame:self.view.bounds];
     [_mapView setManipulationsEnabled:YES];
+    [self applyEffect];
     _mapView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     _mapView.delegate = self;
     
     [self.view addSubview:_mapView];
+    
+    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(15, 25, 13, 23)];
+    [backButton setBackgroundImage:[UIImage imageNamed:@"close_blue"] forState:UIControlStateNormal];
+    [backButton addTarget:self action:@selector(dismissScreen) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.view addSubview:backButton];
+}
+
+- (void)applyEffect
+{
+    // gradient effect at the top
+    UIView *upperView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, _mapView.frame.size.width, 160.0f)];
+    CAGradientLayer *gradient = [CAGradientLayer layer];
+    gradient.frame = upperView.bounds;
+    gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor colorWithRed:255 green:255 blue:255 alpha:0.5] CGColor], (id)[[UIColor colorWithRed:255 green:255 blue:255 alpha:0] CGColor], nil];
+    [upperView.layer insertSublayer:gradient atIndex:0];
+    [_mapView addSubview:upperView];
+    
+    // gradient effect at the bottom
+    UIView *bottomView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, self.view.frame.size.height-140, self.view.frame.size.width, 140)];
+    CAGradientLayer *bottomGradient = [CAGradientLayer layer];
+    bottomGradient.frame = bottomView.bounds;
+    bottomGradient.colors = [NSArray arrayWithObjects:(id)[[UIColor colorWithRed:255 green:255 blue:255 alpha:0] CGColor], (id)[[UIColor colorWithRed:255 green:255 blue:255 alpha:1] CGColor], nil];
+    [bottomView.layer insertSublayer:bottomGradient atIndex:0];
+    [_mapView addSubview:bottomView];
 }
 
 - (void)configureSendState {
@@ -122,6 +148,27 @@ static const CGFloat kQMLocationPinXShift = 3.5f;
     _pinView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
     
     [_mapView addSubview:_pinView];
+}
+
+- (void) viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+ //   self.navigationController.navigationBarHidden = YES;
+}
+
+- (void) viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+//    self.navigationController.navigationBarHidden = NO;
+
+//    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+//    
+//    [self.navigationItem setLeftBarButtonItems:@[backButtonItem] animated:YES];
+}
+
+- (void) dismissScreen
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - Setters
@@ -160,8 +207,13 @@ static const CGFloat kQMLocationPinXShift = 3.5f;
     [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"QM_STR_SETTINGS", nil)
                                                         style:UIAlertActionStyleDefault
                                                       handler:^(UIAlertAction * _Nonnull __unused action) {
-                                                          
-                                                          [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+                                                          if ([[UIApplication sharedApplication] respondsToSelector:@selector(openURL:options:completionHandler:)]) {
+                                                              [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]  options:@{}
+                                                                                       completionHandler:nil];
+                                                          } else {
+                                                              [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+                                                          }
+                       
                                                       }]];
     
     [self presentViewController:alertController animated:YES completion:nil];

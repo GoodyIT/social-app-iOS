@@ -1,0 +1,1 @@
+../../../../Quickblox-WebRTC/QuickbloxWebRTC.framework/Headers/QBRTCVideoTrack.h
