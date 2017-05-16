@@ -337,4 +337,4 @@ Each module has its own storyboard, all storyboards are linked with storyboard l
 If you want to build your own app using Q-municate as a basis, please follow our [detailed guide here](http://quickblox.com/developers/Q-municate#How_to_build_your_own_Chat_app).
  
 # License
-Apache License, Version 2.0. See [LICENSE](LICENSE) file.
+Apache License, Version 2.0. See [LICENSE](LICENSE) file.# social-app-iOS
