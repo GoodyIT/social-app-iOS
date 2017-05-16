@@ -58,7 +58,6 @@
     [self addMyNewGroup];
 }
 
-
 - (void) updateGroupInArray: (GroupModel*) group action:(NSString*) action
 {
     if ([action isEqualToString:@"Join"] && [group.joined integerValue] == 1) {
@@ -181,7 +180,9 @@
         }
         
         self->isFirstLoading = NO;
-        [self.tableView reloadData];
+        if (resultArray.count != 0){
+            [self.tableView reloadData];
+        }
         
         return nil;
     }];

@@ -103,7 +103,7 @@
 
 - (void) configureDropdown
 {
-    NSString* cityName = [QMNetworkManager sharedManager].cityName;
+    NSString* cityName = [LocationManager sharedManager].cityName;
     if (cityName == nil) {
         cityName = @"City";
     }
@@ -402,15 +402,9 @@
         {
 //            [self.postsArray removeAllObjects];
             
-            if (serverTask.isFaulted) {
-                [SVProgressHUD showErrorWithStatus:serverTask.error.localizedDescription];
-                [((QMAppDelegate *)[UIApplication sharedApplication].delegate).timer invalidate];
-                
-                return nil;
-            }
             
             NSMutableArray *resultArray = [[NSMutableArray alloc] initWithArray:[PostModel getPostListFromResponse:serverTask.result]];
-            [resultArray addObjectsFromArray:self.postsArray];
+//            [resultArray addObjectsFromArray:self.postsArray];
             self.postsArray = [resultArray mutableCopy];
             self.postID = ((PostModel*)self.postsArray.lastObject).postID;
             
@@ -421,6 +415,12 @@
             
             [self.tableView reloadData];
         }
+        if (serverTask.isFaulted) {
+            [SVProgressHUD showErrorWithStatus:serverTask.error.localizedDescription];
+            
+            return nil;
+        }
+
         return nil;
     }];
 }
@@ -438,13 +438,6 @@
         self->isTopRefreshing = NO;
         if(!serverTask.isFaulted)
         {
-            if (serverTask.isFaulted) {
-                [SVProgressHUD showErrorWithStatus:serverTask.error.localizedDescription];
-                [((QMAppDelegate *)[UIApplication sharedApplication].delegate).timer invalidate];
-                
-                return nil;
-            }
-            
             NSMutableArray *resultArray = [[NSMutableArray alloc] initWithArray:[PostModel getPostListFromResponse:serverTask.result]];
             if (self->isFirstLoading) {
                 self.postsArray = resultArray;
@@ -467,13 +460,17 @@
             self->isFirstLoading = NO;
             [self.tableView reloadData];
         }
+        if (serverTask.isFaulted) {
+            [SVProgressHUD showErrorWithStatus:serverTask.error.localizedDescription];
+            
+            return nil;
+        }
         return nil;
     }];
 }
 
 - (void) getOldPostsWithKeywordsAndRadiusWithCompletion: (void (^)(void)) completion
 {
-    [self.view endEditing:YES];
     
     [UIApplication sharedApplication].networkActivityIndicatorVisible  = YES;
     @weakify(self);
@@ -484,13 +481,6 @@
         self->isBottomRefreshing = NO;
         if(!serverTask.isFaulted)
         {
-            if (serverTask.isFaulted) {
-                [SVProgressHUD showErrorWithStatus:serverTask.error.localizedDescription];
-                [((QMAppDelegate *)[UIApplication sharedApplication].delegate).timer invalidate];
-                
-                return nil;
-            }
-            
             NSMutableArray *resultArray = [[NSMutableArray alloc] initWithArray:[PostModel getPostListFromResponse:serverTask.result]];
             [self.postsArray addObjectsFromArray:resultArray];
             
@@ -501,6 +491,12 @@
                 [self.tableView reloadData];
             }
         }
+        else {
+            [SVProgressHUD showErrorWithStatus:serverTask.error.localizedDescription];
+            
+            return nil;
+        }
+
         return nil;
     }];
 }
@@ -778,6 +774,10 @@
 
 - (void) didTapReadMoreButton: (NewsFeedCellTableViewCell*) cell trimmedString:(NSString *)trimmedString
 {
+    if ([trimmedString isEqualToString:@""]) {
+        return;
+    }
+    
     PostModel *post  = self.postsArray[cell.tag];
     NSMutableArray *temp = [self.postsArray mutableCopy];
     post.isExpanded = !post.isExpanded;

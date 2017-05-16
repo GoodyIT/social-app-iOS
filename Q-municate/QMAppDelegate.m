@@ -12,6 +12,7 @@
 #import "QMImages.h"
 #import "QMHelpers.h"
 #import "QMNetworkManager.h"
+#import "LocationManager.h"
 #import "DataManager.h"
 #import "QMSplashViewController.h"
 
@@ -26,7 +27,8 @@
 
 static NSString * const kUserHasOnboardedKey = @"user_has_onboarded";
 
-#define DEVELOPMENT 1
+#define DEVELOPMENT 0
+#define SYSTEM_VERSION_GRATERTHAN_OR_EQUALTO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
 
 #if DEVELOPMENT == 1
 
@@ -40,10 +42,10 @@ static NSString * const kQMAccountKey = @"C8mpRE2Cs5qSfFBzxJ7Z";
 #else
 
 // Development
-static const NSUInteger kQMApplicationID = 54473;
-static NSString * const kQMAuthorizationKey = @"s5gmeUn9Vm5uyYx";
-static NSString * const kQMAuthorizationSecret = @"xZRURTG8yQYPxRz";
-static NSString * const kQMAccountKey = @"WiLzxzDjicsTfbu4vqhs";
+static const NSUInteger kQMApplicationID = 52393;
+static NSString * const kQMAuthorizationKey = @"cbL3q5BvSS2AWUH";
+static NSString * const kQMAuthorizationSecret = @"rMtJW5gyH4YWMVZ";
+static NSString * const kQMAccountKey = @"C8mpRE2Cs5qSfFBzxJ7Z";
 
 #endif
 
@@ -370,8 +372,12 @@ static NSString * const kQMAccountKey = @"WiLzxzDjicsTfbu4vqhs";
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
     NSLog(@"%ld", (long)application.applicationIconBadgeNumber);
     
+    [[Mixpanel sharedInstance] track:@"Push Notification"
+                          properties:@{
+                                       @"userInfo": userInfo
+                                       }];
 //    NSInteger badgeNumber = application.applicationIconBadgeNumber;
-//    
+//
 //    application.applicationIconBadgeNumber = badgeNumber + [[[userInfo objectForKey:@"aps"] objectForKey:@"badge"] intValue];
     
     NSLog(@"%ld", (long)application.applicationIconBadgeNumber);
@@ -417,8 +423,6 @@ static NSString * const kQMAccountKey = @"WiLzxzDjicsTfbu4vqhs";
 
 - (void)applicationWillEnterForeground:(UIApplication *)__unused application {
     
-//    application.applicationIconBadgeNumber = 0;
-    
     [[QMCore instance] login];
 }
 
@@ -443,19 +447,13 @@ static NSString * const kQMAccountKey = @"WiLzxzDjicsTfbu4vqhs";
 #pragma mark - Push notification registration
 
 - (void)registerForNotification {    
+    UIUserNotificationType types = UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert;
+    UIUserNotificationSettings *mySettings = [UIUserNotificationSettings settingsForTypes:types categories:nil];
     
-    if ([[UIApplication sharedApplication] respondsToSelector:@selector(registerForRemoteNotifications)])
-    {
-        UIUserNotificationType types = UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert;
-        UIUserNotificationSettings *mySettings = [UIUserNotificationSettings settingsForTypes:types categories:nil];
-        
-        [[UIApplication sharedApplication] registerUserNotificationSettings:mySettings];
-        [[UIApplication sharedApplication] registerForRemoteNotifications];
-    } else {
-        UIRemoteNotificationType types = UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert;
-        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:types];
-    }
+    [[UIApplication sharedApplication] registerUserNotificationSettings:mySettings];
+    [[UIApplication sharedApplication] registerForRemoteNotifications];
 }
+
 
 - (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings {
     if (notificationSettings.types != UIUserNotificationTypeNone) {
@@ -484,24 +482,6 @@ static NSString * const kQMAccountKey = @"WiLzxzDjicsTfbu4vqhs";
 #pragma mark - QMPushNotificationManagerDelegate protocol
 
 - (void)pushNotificationManager:(QMPushNotificationManager *)__unused pushNotificationManager didSucceedFetchingDialog:(QBChatDialog *)chatDialog {
- 
-//    UINavigationController* splitNavController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"ChatNavigation"];
-// 
-//    
-//    UISplitViewController* splitController = [splitNavController viewControllers].firstObject;
-//    
-//    UITabBarController *tabBarController = [[splitController viewControllers] firstObject];
-//    UIViewController *dialogsVC = [[(UINavigationController *)[[tabBarController viewControllers] firstObject] viewControllers] firstObject];
-//    
-//    NSString *activeDialogID = [QMCore instance].activeDialogID;
-//    if ([chatDialog.ID isEqualToString:activeDialogID]) {
-//        // dialog is already active
-//        return;
-//    }
-    //   mainController.chatDialogFromPush = chatDialog;
-    //    QMChatVC *chatVC = [QMChatVC chatViewControllerWithChatDialog:chatDialog];
-    //    [mainViewNavController setNavigationBarHidden:NO];
-    //    [mainViewNavController pushViewController:chatVC animated:YES];
     
     UINavigationController* mainViewNavController = (UINavigationController*) self.window.rootViewController;
     UIViewController* mainController = mainViewNavController.topViewController;
@@ -516,40 +496,73 @@ static NSString * const kQMAccountKey = @"WiLzxzDjicsTfbu4vqhs";
     NSLog(@"location error %@", error.localizedDescription);
 }
 -(void)locationManager:(CLLocationManager *)__unused manager didUpdateLocations:(NSArray *)locations{
+    [[Mixpanel sharedInstance] track:@"Location Update "
+                          properties:@{
+                                       @"path": @"appdelegate",
+                                       @"state" : @"just in"
+                                       }];
+
+    
     if([QMCore instance].currentProfile.userData == nil || [[TokenModel sharedInstance].token isEqualToString:@""]) return;
     
     CLLocation* location = [locations lastObject];
     
     NSDate* eventDate = location.timestamp;
     
-    NSTimeInterval howRecent = [eventDate timeIntervalSinceDate:[QMNetworkManager sharedManager].lastLoggedDateTime];
-    if (fabs(howRecent) > 15.0 || [[QMNetworkManager sharedManager].cityName isEqualToString:@""]) {
-        NSLog(@"=====mangeer cityname %@, time%f=====", [QMNetworkManager sharedManager].cityName, howRecent);
-        [QMNetworkManager sharedManager].lastLoggedDateTime = eventDate;
+    float defaultTolerate = 1.0;
+    if (![[LocationManager sharedManager].cityName isEqualToString:@""]) {
+        defaultTolerate = 30.0;
+    }
+    
+    NSTimeInterval howRecent = [eventDate timeIntervalSinceDate:[LocationManager sharedManager].lastLoggedDateTime];
+    if (fabs(howRecent) > defaultTolerate || [[LocationManager sharedManager].cityName isEqualToString:@""]) {
+//    {
+        [LocationManager sharedManager].lastLoggedDateTime = eventDate;
+        [LocationManager sharedManager].oldLocation = location.coordinate;
         
         CLGeocoder *geocoder = [[CLGeocoder alloc] init];
         [geocoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error)
          {
+             [[Mixpanel sharedInstance] track:@"Location Update "
+                                   properties:@{
+                                                @"path": @"appdelegate",
+                                                @"state" : @"geocode"
+                                                
+                                                }];
+             
              if(error) {
+                 [[Mixpanel sharedInstance] track:@"Location Update "
+                                       properties:@{
+                                                    @"path": @"appdelegate",
+                                                    @"state" : @"geocode",
+                                                    @"error": error.localizedDescription
+                                                    }];
                  return;
              }
              CLPlacemark *placemark = [placemarks objectAtIndex:0];
              if([placemark.country length] != 0) {
-                 [QMNetworkManager sharedManager].countryName = placemark.country;
+                 [LocationManager sharedManager].countryName = placemark.country;
              } else {
-                 [QMNetworkManager sharedManager].countryName = @"";
+                 [LocationManager sharedManager].countryName = @"";
              }
              if([placemark.locality length] != 0) {
-                 [QMNetworkManager sharedManager].cityName = placemark.locality;
+                 [LocationManager sharedManager].cityName = placemark.locality;
              } if([placemark.administrativeArea length] != 0) {
-                 [QMNetworkManager sharedManager].stateName = placemark.administrativeArea;
+                 [LocationManager sharedManager].stateName = placemark.administrativeArea;
              }
              else {
-                 [QMNetworkManager sharedManager].cityName = @"";
+                 [LocationManager sharedManager].cityName = @"";
              }
              
-             
-             [[QMNetworkManager sharedManager] updateLocate];
+             [[Mixpanel sharedInstance] track:@"Location Update "
+                                   properties:@{
+                                                @"path": @"appdelegate",
+                                                @"state" : @"before called"
+                                                }];
+             if (![[LocationManager sharedManager].serverStatus isEqualToString:@"ServerUpload"]){
+                 [LocationManager sharedManager].serverStatus = @"ServerUpload";
+                 [[LocationManager sharedManager] updateLocate];
+             }
          }];
     }
  }

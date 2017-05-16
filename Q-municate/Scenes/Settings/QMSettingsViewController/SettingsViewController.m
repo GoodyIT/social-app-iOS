@@ -176,7 +176,7 @@
     self.username.text = self.user.userName;
     NSURL *avatarUrl = [NSURL URLWithString:self.user.avatarURL];
     
-    [self.userAvatar setImageWithURL:avatarUrl placeholder:[UIImage imageNamed:@"default"] options:SDWebImageHighPriority progress:nil completedBlock:nil];
+    [self.userAvatar setImageWithURL:avatarUrl placeholder:[UIImage imageNamed:@"default"] options:SDWebImageDelayPlaceholder progress:nil completedBlock:nil];
 }
 
 #pragma mark - Navigation

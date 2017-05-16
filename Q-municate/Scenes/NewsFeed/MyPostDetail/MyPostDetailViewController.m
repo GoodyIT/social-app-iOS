@@ -412,6 +412,10 @@
 
 - (void) didTapReadMoreButton: (NewsFeedCellTableViewCell*) cell trimmedString:(NSString *)trimmedString
 {
+    if ([trimmedString isEqualToString:@""]) {
+        return;
+    }
+    
     PostModel *post  = self.postsArray[cell.tag];
     NSMutableArray *temp = [self.postsArray mutableCopy];
     post.isExpanded = !post.isExpanded;

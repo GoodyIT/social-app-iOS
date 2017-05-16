@@ -26,7 +26,6 @@
 @property (weak, nonatomic) IBOutlet QMImageView *avatarImageView;
 @property (strong, nonatomic) KILabel *tagsLabel;
 
-
 - (NSURL*) getPostImageURL;
 
 - (void) stopVideo;

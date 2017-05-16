@@ -75,7 +75,7 @@
 
 - (void)configureCell: (TopicModel*) topicModel
 {
-    [self.userAvatarImage setImageWithURL:[NSURL URLWithString:topicModel.author.avatarURL] placeholder:[UIImage imageNamed:@"default"] options:SDWebImageHighPriority progress:nil completedBlock:nil];
+    [self.userAvatarImage setImageWithURL:[NSURL URLWithString:topicModel.author.avatarURL] placeholder:[UIImage imageNamed:@"default"] options:SDWebImageDelayPlaceholder progress:nil completedBlock:nil];
     
     self.userAvatarImage.delegate = self;
     

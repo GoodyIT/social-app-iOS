@@ -159,6 +159,7 @@
 		69DB5EF518E31D6400277226 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69DB5EF418E31D6400277226 /* MessageUI.framework */; };
 		7903B14B1E4A2439009626F6 /* NSString+QMSiriUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 7903B1481E4A2439009626F6 /* NSString+QMSiriUtils.m */; };
 		7903B14C1E4A2439009626F6 /* NSString+QMTransliterating.m in Sources */ = {isa = PBXBuildFile; fileRef = 7903B14A1E4A2439009626F6 /* NSString+QMTransliterating.m */; };
+		79066F531E6A720700814693 /* LocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 79066F521E6A720700814693 /* LocationManager.m */; };
 		79F875AE1E30219E00803043 /* Share_icon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79F875AD1E30219E00803043 /* Share_icon@3x.png */; };
 		79FA42951E3312D700E044CD /* BaseNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FA42941E3312D700E044CD /* BaseNavigationController.m */; };
 		79FE2BB21E4D95B0004AA7AE /* MyCreatedGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FE2BB11E4D95B0004AA7AE /* MyCreatedGroupViewController.m */; };
@@ -694,6 +695,8 @@
 		7903B1481E4A2439009626F6 /* NSString+QMSiriUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+QMSiriUtils.m"; sourceTree = "<group>"; };
 		7903B1491E4A2439009626F6 /* NSString+QMTransliterating.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+QMTransliterating.h"; sourceTree = "<group>"; };
 		7903B14A1E4A2439009626F6 /* NSString+QMTransliterating.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+QMTransliterating.m"; sourceTree = "<group>"; };
+		79066F511E6A720700814693 /* LocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationManager.h; sourceTree = "<group>"; };
+		79066F521E6A720700814693 /* LocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationManager.m; sourceTree = "<group>"; };
 		79F875AD1E30219E00803043 /* Share_icon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Share_icon@3x.png"; sourceTree = "<group>"; };
 		79FA42931E3312D700E044CD /* BaseNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseNavigationController.h; sourceTree = "<group>"; };
 		79FA42941E3312D700E044CD /* BaseNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseNavigationController.m; sourceTree = "<group>"; };
@@ -3242,6 +3245,8 @@
 				84F4DA301DEE574E009C3D3C /* NetworkManagerConstants.h */,
 				84F4DA2C1DEE5480009C3D3C /* QMNetworkManager.h */,
 				84F4DA2D1DEE5480009C3D3C /* QMNetworkManager.m */,
+				79066F511E6A720700814693 /* LocationManager.h */,
+				79066F521E6A720700814693 /* LocationManager.m */,
 			);
 			path = QMNetworkManager;
 			sourceTree = "<group>";
@@ -3447,8 +3452,8 @@
 				ORGANIZATIONNAME = Quickblox;
 				TargetAttributes = {
 					69D57E5118ACC11C00A9900A = {
-						DevelopmentTeam = 6P7U8ZFF7F;
-						ProvisioningStyle = Manual;
+						DevelopmentTeam = 6ATV26A86Y;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -3893,6 +3898,7 @@
 				842BDFCA1E13ED6D002B4DC8 /* MyGroupPagerController.m in Sources */,
 				846B013B1E1A0D1000C29524 /* JournalTableViewCell.m in Sources */,
 				581F6E221D3E3E1C0087BC7A /* QMHelpers.m in Sources */,
+				79066F531E6A720700814693 /* LocationManager.m in Sources */,
 				84F4DA451DEE59A8009C3D3C /* HashtagModel.m in Sources */,
 				84F4DA531DEE7CC2009C3D3C /* KeychainWrapper.m in Sources */,
 				58D8478F1C8886D8000C40BA /* QMGlobalSearchDataProvider.m in Sources */,
@@ -3989,10 +3995,10 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Michael Arevalo (ANA2P5EXW8)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_RESOURCE_RULES_PATH = "";
 				COPY_PHASE_STRIP = NO;
-				DEVELOPMENT_TEAM = 6P7U8ZFF7F;
+				DEVELOPMENT_TEAM = 6ATV26A86Y;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -4037,11 +4043,11 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Michael Arevalo (ANA2P5EXW8)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Michael Arevalo (ANA2P5EXW8)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_RESOURCE_RULES_PATH = "";
 				COPY_PHASE_STRIP = YES;
-				DEVELOPMENT_TEAM = 6P7U8ZFF7F;
+				DEVELOPMENT_TEAM = 6ATV26A86Y;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -4067,10 +4073,10 @@
 				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = YES;
 				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = YES;
 				CODE_SIGN_ENTITLEMENTS = "Q-municate/Q-municate.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Michael Arevalo (ANA2P5EXW8)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_RESOURCE_RULES_PATH = "";
-				DEVELOPMENT_TEAM = 6P7U8ZFF7F;
+				DEVELOPMENT_TEAM = 6ATV26A86Y;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4086,7 +4092,7 @@
 					/usr/include/libxml2,
 				);
 				INFOPLIST_FILE = "Q-municate/Supporting Files/reach-ios-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				ONLY_ACTIVE_ARCH = YES;
@@ -4099,13 +4105,13 @@
 				OTHER_LIBTOOLFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = reach.com;
 				PRODUCT_NAME = "reach-ios";
-				PROVISIONING_PROFILE = "376d4297-055a-410f-92fb-1e76f0187a96";
-				PROVISIONING_PROFILE_SPECIFIER = ReachDev;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				REZ_SEARCH_PATHS = "$(inherited)";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited)";
-				VALID_ARCHS = "arm64 armv7 armv7s";
+				VALID_ARCHS = "arm64 armv7";
 				WARNING_CFLAGS = (
 					"-Wall",
 					"-Wdeprecated-implementations",
@@ -4129,10 +4135,10 @@
 				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = YES;
 				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = YES;
 				CODE_SIGN_ENTITLEMENTS = "Q-municate/Q-municate.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: M&A Media LLC (6P7U8ZFF7F)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_RESOURCE_RULES_PATH = "";
-				DEVELOPMENT_TEAM = 6P7U8ZFF7F;
+				DEVELOPMENT_TEAM = 6ATV26A86Y;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4153,7 +4159,7 @@
 					/usr/include/libxml2,
 				);
 				INFOPLIST_FILE = "Q-municate/Supporting Files/reach-ios-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				ONLY_ACTIVE_ARCH = NO;
@@ -4166,13 +4172,13 @@
 				OTHER_LIBTOOLFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = reach.com;
 				PRODUCT_NAME = "reach-ios";
-				PROVISIONING_PROFILE = "2b1d6f6d-cc29-480c-88c5-a8c2a3b40262";
-				PROVISIONING_PROFILE_SPECIFIER = ReachProd1;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				REZ_SEARCH_PATHS = "$(inherited)";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited)";
-				VALID_ARCHS = "arm64 armv7 armv7s";
+				VALID_ARCHS = "arm64 armv7";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -4197,11 +4203,11 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_RESOURCE_RULES_PATH = "";
 				COPY_PHASE_STRIP = YES;
-				DEVELOPMENT_TEAM = 6P7U8ZFF7F;
+				DEVELOPMENT_TEAM = 6ATV26A86Y;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -4227,10 +4233,10 @@
 				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = YES;
 				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = YES;
 				CODE_SIGN_ENTITLEMENTS = "Q-municate/Q-municate.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: M&A Media LLC (6P7U8ZFF7F)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_RESOURCE_RULES_PATH = "";
-				DEVELOPMENT_TEAM = 6P7U8ZFF7F;
+				DEVELOPMENT_TEAM = 6ATV26A86Y;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4251,7 +4257,7 @@
 					/usr/include/libxml2,
 				);
 				INFOPLIST_FILE = "Q-municate/Supporting Files/reach-ios-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				ONLY_ACTIVE_ARCH = NO;
@@ -4264,13 +4270,13 @@
 				OTHER_LIBTOOLFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = reach.com;
 				PRODUCT_NAME = "reach-ios";
-				PROVISIONING_PROFILE = "09cb1ce3-732f-4959-bab2-3426d9db8ee9";
-				PROVISIONING_PROFILE_SPECIFIER = ReachProd1;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				REZ_SEARCH_PATHS = "$(inherited)";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited)";
-				VALID_ARCHS = "arm64 armv7 armv7s";
+				VALID_ARCHS = "arm64 armv7";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Distribution;

@@ -19,14 +19,13 @@
 
 @property(nonatomic, strong) AFHTTPSessionManager  *manager;
 @property(nonatomic, strong) NSURLSession *session;
+@property (nonatomic, strong) BFTaskCompletionSource* source;
 
 @end
 
 @implementation QMNetworkManager
 @synthesize myProfile;
-@synthesize stateName;
-@synthesize lastLoggedDateTime;
-@synthesize cityName;
+
 
 
 + (QMNetworkManager *)sharedManager {
@@ -43,8 +42,6 @@
 
 - (instancetype)init {
     if (self = [super init]) {
-        lastLoggedDateTime = [[NSDate alloc] init];
-        cityName = @"";
         [self initManager];
     }
     
@@ -55,7 +52,7 @@
 {
     self.manager = [[AFHTTPSessionManager  alloc] initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
     
-    self.manager.session.configuration.requestCachePolicy = NSURLRequestReloadIgnoringLocalCacheData;
+//    self.manager.session.configuration.requestCachePolicy = NSURLRequestReloadIgnoringLocalCacheData;
 //    self.manager.securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeNone];
     
     self.manager.responseSerializer =  [AFJSONResponseSerializer serializer];
@@ -97,28 +94,29 @@
     
     return [self perfomRequestWithPath:usgetUserByToken parameters:parameters];
 }
-
-- (BFTask *)updateLocate {
-    NSDictionary *parameters = @{
-                                 @"token":[TokenModel sharedInstance].token,
-                                 @"country_name": [QMNetworkManager sharedManager].countryName,
-                                 @"city_name": [QMNetworkManager sharedManager].cityName,
-                                 @"state_name": [QMNetworkManager sharedManager].stateName,
-                                 @"latitude": [NSNumber numberWithDouble: [QMNetworkManager sharedManager].oldLocation.latitude],
-                                 @"longitude": [NSNumber numberWithDouble: [QMNetworkManager sharedManager].oldLocation.longitude]
-                                 };
-    
-    if  ([[TokenModel sharedInstance].token isEqualToString:@""])
-    {
-        [[Mixpanel sharedInstance] track:@"Token - error "
-                              properties:@{
-                                           @"path": updateLocate,
-                                           @"params": parameters
-                                           }];
-        return nil;
-    }
-   return [self perfomRequestWithPath:updateLocate parameters:parameters];
-}
+//
+//- (BFTask *)updateLocate {
+//    NSDictionary *parameters = @{
+//                                 @"token":[TokenModel sharedInstance].token,
+//                                 @"country_name": [QMNetworkManager sharedManager].countryName,
+//                                 @"city_name": [QMNetworkManager sharedManager].cityName,
+//                                 @"state_name": [QMNetworkManager sharedManager].stateName,
+//                                 @"latitude": [NSNumber numberWithDouble: [QMNetworkManager sharedManager].oldLocation.latitude],
+//                                 @"longitude": [NSNumber numberWithDouble: [QMNetworkManager sharedManager].oldLocation.longitude]
+//                                 };
+//    
+//    if  ([[TokenModel sharedInstance].token isEqualToString:@""])
+//    {
+//        [[Mixpanel sharedInstance] track:@"Token - error "
+//                              properties:@{
+//                                           @"path": updateLocate,
+//                                           @"params": parameters
+//                                           }];
+//        return nil;
+//    }
+//    
+//   return [self perfomRequestWithPath:updateLocate parameters:parameters];
+//}
 
 - (BFTask *) restorePasswordWithEmail:(NSString *)email{
     NSDictionary *parameters = @{@"email":email};
@@ -549,7 +547,7 @@
 
 - (BFTask*) syncPerfomRequestWithPath:(NSString *)path
                        parameters:(NSDictionary *)parameters{
-    BFTaskCompletionSource* source = [BFTaskCompletionSource taskCompletionSource];
+    BFTaskCompletionSource* syncSource = [BFTaskCompletionSource taskCompletionSource];
     
     NSString *URLString = [baseURLString stringByAppendingString:path];
     
@@ -575,9 +573,9 @@
                                          if (!error) {
                                              if (error) {
                                                  if([error.localizedDescription isEqualToString:@"token doesn't exist"]){
-                                                     [source trySetError:error];
+                                                     [syncSource trySetError:error];
                                                  }
-                                                 [source trySetError:error];
+                                                 [syncSource trySetError:error];
                                              } else {
                                                  @strongify(responseObject);
                                                  if (error == nil) {
@@ -591,25 +589,25 @@
                                                                                  code:[[responseObject valueForKey:@"error"] intValue]
                                                                              userInfo:userInfo];
                                                      if ([responseObject valueForKey:@"post"]) {
-                                                         [source trySetResult:[PostModel getPostInfoFromResponse:[responseObject valueForKey:@"post"]]];
+                                                         [syncSource trySetResult:[PostModel getPostInfoFromResponse:[responseObject valueForKey:@"post"]]];
                                                      } else {
-                                                         [source trySetError:error];
+                                                         [syncSource trySetError:error];
                                                      }
                                                  } else {
-                                                     [source trySetResult:responseObject];
+                                                     [syncSource trySetResult:responseObject];
                                                  }
                                              }
                                          } else {
                                              [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
                                              if([error.localizedDescription isEqualToString:@"token doesn't exist"]){
-                                                 [source trySetError:error];
+                                                 [syncSource trySetError:error];
                                              }
                                              
                                              if (error.code == NSURLErrorTimedOut) {
-                                                 [source trySetError:error];
+                                                 [syncSource trySetError:error];
                                              }
                                              
-                                             [source trySetError:error];
+                                             [syncSource trySetError:error];
                                              
                                          }
                                          
@@ -619,24 +617,25 @@
     
     dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
     
-    return source.task;
+    return syncSource.task;
 }
 
 -(void)goToLoginController{
-    [[QMCore instance] logout];
-    
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Auth" bundle:nil];
-    UINavigationController *loginController = [storyboard instantiateViewControllerWithIdentifier:@"startNavigationController"];
-    
-    UIView *snapShot = [[UIApplication sharedApplication].delegate.window snapshotViewAfterScreenUpdates:YES];
-    [loginController.view addSubview:snapShot];
-    [UIApplication sharedApplication].delegate.window.rootViewController = loginController;
-    [UIView animateWithDuration:1.0 animations:^{
-        snapShot.layer.opacity = 0;
-        snapShot.layer.transform = CATransform3DMakeScale(1.5, 1.5, 1.5);
-    } completion:^(BOOL __unused finished) {
-        [snapShot removeFromSuperview];
-        [[UIApplication sharedApplication].delegate.window makeKeyAndVisible];
+    [[[QMCore instance] logout] continueWithBlock:^id _Nullable(BFTask * _Nonnull __unused t) {
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Auth" bundle:nil];
+        UINavigationController *loginController = [storyboard instantiateViewControllerWithIdentifier:@"startNavigationController"];
+        
+        UIView *snapShot = [[UIApplication sharedApplication].delegate.window snapshotViewAfterScreenUpdates:YES];
+        [loginController.view addSubview:snapShot];
+        [UIApplication sharedApplication].delegate.window.rootViewController = loginController;
+        [UIView animateWithDuration:1.0 animations:^{
+            snapShot.layer.opacity = 0;
+            snapShot.layer.transform = CATransform3DMakeScale(1.5, 1.5, 1.5);
+        } completion:^(BOOL __unused finished) {
+            [snapShot removeFromSuperview];
+            [[UIApplication sharedApplication].delegate.window makeKeyAndVisible];
+        }];
+        return nil;
     }];
 }
 
@@ -692,14 +691,12 @@
     return [self perfomRequestWithPath:getCreatedGroups parameters:parameters];
 }
 
-- (BFTask*) getMyJoinedGroupsWithOffset: (NSString*) filter offset:(NSNumber*) offset
+- (BFTask*) getMyJoinedGroupsWithGroupID: (NSNumber*) groupID withType: (NSString*) type
 {
     NSDictionary *parameters = @{
                                  @"token" : [TokenModel sharedInstance].token,
-                                 @"keyword": filter,
-                                 @"offset": offset,
-                                 @"type": @"new",
-                                 @"circle_id":@(-1)
+                                 @"type": type,
+                                 @"circle_id":groupID
                                  };
     
     return [self perfomRequestWithPath:getJoinedGroups parameters:parameters];
@@ -750,7 +747,7 @@
 
 - (BFTask *) perfomRequestWithPath:(NSString *)path
                    parameters:(NSDictionary *)parameters{
-    
+
     
     BFTaskCompletionSource* source = [BFTaskCompletionSource taskCompletionSource];
     
@@ -764,10 +761,12 @@
     [req setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [req setValue:@"application/json" forHTTPHeaderField:@"Accept"];
     [req setHTTPBody:[jsonString dataUsingEncoding:NSUTF8StringEncoding]];
-  //  [req setTimeoutInterval:30.0];
+    [req setTimeoutInterval:100.0];
     
+    @weakify(self);
     [[self.manager dataTaskWithRequest:req completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
         
+        @strongify(self);
         id _responseObject = [responseObject copy];
         
         if (response)
@@ -793,6 +792,7 @@
                     [self goToLoginController];
                     return;
                 }
+                
                 [source trySetError:error];
                 
             } else {
@@ -837,9 +837,7 @@
                 [self goToLoginController];
                 return;
             }            
-            if (error.code == NSURLErrorTimedOut) {
-                [source setError:error];
-            }
+
             [source setError:error];
         }
     }] resume];

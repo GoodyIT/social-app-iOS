@@ -335,7 +335,7 @@
         self.usernameLabel.text = postInfo.author.userName;
         NSURL *avatarUrl = [NSURL URLWithString:postInfo.author.avatarURL];
         
-         [self.avatarImageView setImageWithURL:avatarUrl placeholder:[UIImage imageNamed:@"default"] options:SDWebImageLowPriority progress:nil completedBlock:nil];
+         [self.avatarImageView setImageWithURL:avatarUrl placeholder:[UIImage imageNamed:@"default"] options:SDWebImageDelayPlaceholder progress:nil completedBlock:nil];
     } else {
         self.usernameLabel.text = @"Anonymous";
         self.avatarImageView.image = [UIImage imageNamed:@"default-avatar"];

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16B2657" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="YH4-rQ-UBO">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16B2657" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="YH4-rQ-UBO">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -32,7 +32,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo-splash.png" translatesAutoresizingMaskIntoConstraints="NO" id="j0C-sJ-Uhu">
-                                <rect key="frame" x="113.66666666666669" y="178" width="186.66666666666663" height="160"/>
+                                <rect key="frame" x="114" y="178" width="186" height="160"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="160" id="D4G-D3-dKy"/>
                                 </constraints>
@@ -211,13 +211,13 @@
                                         </constraints>
                                     </imageView>
                                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UQj-So-fD7" userLabel="Firstname Input View" customClass="BaseTextInputView">
-                                        <rect key="frame" x="69" y="199" width="276.66666666666669" height="50"/>
+                                        <rect key="frame" x="70" y="199" width="276" height="50"/>
                                         <subviews>
                                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FZd-c8-sxI">
-                                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                                <rect key="frame" x="1" y="0.0" width="50" height="50"/>
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Username_icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="yrF-It-526">
-                                                        <rect key="frame" x="16" y="14" width="18" height="21"/>
+                                                        <rect key="frame" x="17" y="14" width="18" height="21"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="18" id="dzg-xQ-kJE"/>
                                                             <constraint firstAttribute="width" secondItem="yrF-It-526" secondAttribute="height" multiplier="13:15" id="fV3-il-pvD"/>
@@ -232,7 +232,7 @@
                                                 </constraints>
                                             </view>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="First Name" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="HUq-Qn-Peu">
-                                                <rect key="frame" x="58" y="14" width="210.66666666666669" height="22"/>
+                                                <rect key="frame" x="59" y="14" width="210" height="22"/>
                                                 <color key="textColor" red="0.93725490570000003" green="0.93725490570000003" blue="0.95686274770000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="16"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" returnKeyType="next"/>
@@ -421,13 +421,13 @@
                                         </constraints>
                                     </view>
                                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5a2-0z-JYh" userLabel="Password Input View" customClass="BaseTextInputView">
-                                        <rect key="frame" x="69" y="449" width="276.66666666666669" height="50"/>
+                                        <rect key="frame" x="70" y="449" width="276" height="50"/>
                                         <subviews>
                                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S7s-vx-nfN">
-                                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                                <rect key="frame" x="1" y="0.0" width="50" height="50"/>
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Password_icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="6OM-9k-w54">
-                                                        <rect key="frame" x="16" y="14" width="18" height="22"/>
+                                                        <rect key="frame" x="17" y="14" width="18" height="22"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="6OM-9k-w54" secondAttribute="height" multiplier="29:35" id="iy8-nd-PFB"/>
                                                             <constraint firstAttribute="width" constant="18" id="nbU-ys-Mj8"/>
@@ -442,7 +442,7 @@
                                                 </constraints>
                                             </view>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="w86-KG-jMx">
-                                                <rect key="frame" x="58" y="14" width="210.66666666666669" height="22"/>
+                                                <rect key="frame" x="59" y="14" width="210" height="22"/>
                                                 <color key="textColor" red="0.93725490570000003" green="0.93725490570000003" blue="0.95686274770000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="16"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done" secureTextEntry="YES"/>
@@ -578,10 +578,10 @@
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo-splash.png" translatesAutoresizingMaskIntoConstraints="NO" id="2rV-6z-fOF">
-                                        <rect key="frame" x="113.66666666666669" y="76" width="186.66666666666663" height="266"/>
+                                        <rect key="frame" x="114" y="76" width="186" height="266"/>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7bX-Ak-AMy">
-                                        <rect key="frame" x="133.66666666666669" y="612" width="147.00000000000006" height="44"/>
+                                        <rect key="frame" x="134" y="612" width="147" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="WDg-KG-F8D"/>
                                         </constraints>
@@ -595,13 +595,13 @@
                                         </connections>
                                     </button>
                                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Vd-bg-LqX" customClass="BaseTextInputView">
-                                        <rect key="frame" x="69.666666666666686" y="442" width="276" height="50"/>
+                                        <rect key="frame" x="69" y="442" width="276" height="50"/>
                                         <subviews>
                                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vaa-nW-U26">
-                                                <rect key="frame" x="0.3333333333333286" y="0.0" width="50" height="50"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Password_icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="xxq-2b-jla">
-                                                        <rect key="frame" x="16.333333333333329" y="14" width="18" height="21.666666666666686"/>
+                                                        <rect key="frame" x="16" y="14" width="18" height="22"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="18" id="Lvf-Oc-LaK"/>
                                                             <constraint firstAttribute="width" secondItem="xxq-2b-jla" secondAttribute="height" multiplier="29:35" id="iw7-AK-v3n"/>
@@ -616,7 +616,7 @@
                                                 </constraints>
                                             </view>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="49h-Yq-cek">
-                                                <rect key="frame" x="50.333333333333314" y="14" width="218" height="22"/>
+                                                <rect key="frame" x="50" y="14" width="218" height="22"/>
                                                 <color key="textColor" red="0.93725490570000003" green="0.93725490570000003" blue="0.95686274770000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="16"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done" secureTextEntry="YES"/>
@@ -637,13 +637,13 @@
                                         </constraints>
                                     </view>
                                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xWF-fX-1uS" customClass="BaseTextInputView">
-                                        <rect key="frame" x="69.666666666666686" y="372" width="276" height="50"/>
+                                        <rect key="frame" x="69" y="372" width="276" height="50"/>
                                         <subviews>
                                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Muf-2U-2go">
-                                                <rect key="frame" x="0.3333333333333286" y="0.0" width="50" height="50"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Username_icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="vcG-Fq-tkY">
-                                                        <rect key="frame" x="16.333333333333329" y="14.666666666666686" width="18" height="20.333333333333314"/>
+                                                        <rect key="frame" x="16" y="15" width="18" height="20"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="18" id="LLk-ef-nVL"/>
                                                             <constraint firstAttribute="width" secondItem="vcG-Fq-tkY" secondAttribute="height" multiplier="13:15" id="vuj-4t-dO1"/>
@@ -658,7 +658,7 @@
                                                 </constraints>
                                             </view>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rR9-Bb-mUP">
-                                                <rect key="frame" x="50.333333333333314" y="14" width="218" height="22"/>
+                                                <rect key="frame" x="50" y="14" width="218" height="22"/>
                                                 <color key="textColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                                 <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="16"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="emailAddress" returnKeyType="next"/>
@@ -718,7 +718,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOG IN" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wMw-SA-WHv">
-                                        <rect key="frame" x="172" y="23.666666666666671" width="70" height="27.333333333333329"/>
+                                        <rect key="frame" x="172" y="23" width="70" height="28"/>
                                         <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="20"/>
                                         <color key="textColor" red="0.94586122039999998" green="0.94583284850000005" blue="0.94584894180000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -793,7 +793,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo-splash.png" translatesAutoresizingMaskIntoConstraints="NO" id="Y2u-RK-tOo">
-                                        <rect key="frame" x="113.66666666666669" y="100" width="186.66666666666663" height="160"/>
+                                        <rect key="frame" x="114" y="100" width="186" height="160"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="160" id="fYO-qg-STm"/>
                                         </constraints>
@@ -805,7 +805,7 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Username_icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="Gbn-lE-MaO">
-                                                        <rect key="frame" x="16" y="14.666666666666686" width="18" height="21"/>
+                                                        <rect key="frame" x="16" y="15" width="18" height="21"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="Gbn-lE-MaO" secondAttribute="height" multiplier="13:15" id="frR-xO-sh2"/>
                                                             <constraint firstAttribute="width" constant="18" id="g3t-5q-znW"/>
@@ -866,7 +866,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FORGOT PASSWORD" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iML-4R-HLc">
-                                        <rect key="frame" x="105.66666666666669" y="28.666666666666671" width="203" height="27.333333333333329"/>
+                                        <rect key="frame" x="106" y="28" width="203" height="28"/>
                                         <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="20"/>
                                         <color key="textColor" red="0.93725490570000003" green="0.93725490570000003" blue="0.95686274770000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -974,6 +974,6 @@
         <image name="logo-splash.png" width="219" height="182"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="YVk-wG-DA6"/>
+        <segue reference="S0K-uw-rzb"/>
     </inferredMetricsTieBreakers>
 </document>

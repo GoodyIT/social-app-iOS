@@ -58,7 +58,7 @@
 
 - (void)configureCellWithUserInfo: (UserModel*) userModel
 {
-    [self.userAvatarImage setImageWithURL:[NSURL URLWithString:userModel.avatarURL] placeholder:[UIImage imageNamed:@"default"] options:SDWebImageHighPriority progress:nil completedBlock:nil];
+    [self.userAvatarImage setImageWithURL:[NSURL URLWithString:userModel.avatarURL] placeholder:[UIImage imageNamed:@"default"] options:SDWebImageDelayPlaceholder progress:nil completedBlock:nil];
     
     self.userAvatarImage.delegate = self;
     

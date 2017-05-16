@@ -62,7 +62,7 @@
 
 - (void)configureCellWithGroupDetailInfo: (TopicModel*) topicModel
 {
-    [self.avatarImageView setImageWithURL:[NSURL URLWithString:topicModel.author.avatarURL] placeholder:[UIImage imageNamed:@"default"] options:SDWebImageHighPriority progress:nil completedBlock:nil];
+    [self.avatarImageView setImageWithURL:[NSURL URLWithString:topicModel.author.avatarURL] placeholder:[UIImage imageNamed:@"default"] options:SDWebImageDelayPlaceholder progress:nil completedBlock:nil];
     
     self.avatarImageView.delegate = self;
     self.userTopic.text = topicModel.author.userName;

@@ -15,7 +15,7 @@
 #import <mach/mach.h>
 
 static const NSTimeInterval kQMAnswerTimeInterval = 60.0f;
-static const NSTimeInterval kQMDisconnectTimeInterval = 30.0f;
+//static const NSTimeInterval kQMDisconnectTimeInterval = 30.0f;
 static const NSTimeInterval kQMDialingTimeInterval = 5.0f;
 
 @interface QMCallManager ()

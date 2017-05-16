@@ -235,9 +235,10 @@
     [[[QMNetworkManager sharedManager] searchPostByHashtag:self.hashtag fromPost:[self newPostID] withType:@"new" ] continueWithBlock:^id _Nullable(BFTask * _Nonnull serverTask) {
         
         @strongify(self);
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         if (self == nil) return nil;
         self->isTopRefreshing = NO;
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+        
         
         if (serverTask.isFaulted) {
             [SVProgressHUD showErrorWithStatus:serverTask.error.localizedDescription];
@@ -437,7 +438,6 @@
 }
 
 #pragma mark - NYTPhotosViewControllerDelegate
-
 - (UIView *)photosViewController:(NYTPhotosViewController *)__unused photosViewController referenceViewForPhoto:(id<NYTPhoto>)__unused photo {
     
     return self.postView;
@@ -596,7 +596,7 @@
     PostModel* post = self.postsArray[section];
     if ([post.video isKindOfClass:[NSNull class]]) {
        [QMImagePreview previewImageWithURL:[cell getPostImageURL] inViewController:self];
-    }    
+    }
 }
 
 - (void) didTapAvatar:(NewsFeedCellTableViewCell *)cell {
@@ -619,6 +619,9 @@
 
 - (void) didTapReadMoreButton: (NewsFeedCellTableViewCell*) cell trimmedString:(NSString *)trimmedString
 {
+    if ([trimmedString isEqualToString:@""]) {
+        return;
+    }
     PostModel *post  = self.postsArray[cell.tag];
     NSMutableArray *temp = [self.postsArray mutableCopy];
     post.isExpanded = !post.isExpanded;

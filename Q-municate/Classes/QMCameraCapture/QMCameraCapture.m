@@ -485,8 +485,8 @@ AVCaptureDevice * captureDeviceWithPosition(AVCaptureDevicePosition devicePositi
     
     QBRTCVideoFrame *videoFrame = [[QBRTCVideoFrame alloc] initWithPixelBuffer:pixelBuffer
                                                                  videoRotation:QBRTCVideoRotation_0];
-    int64_t timestamp = (int64_t)(CMTimeGetSeconds(info.presentationTimeStamp) * NSEC_PER_SEC);
-    videoFrame.timestamp = timestamp;
+//    int64_t timestamp = (int64_t)(CMTimeGetSeconds(info.presentationTimeStamp) * NSEC_PER_SEC);
+//    videoFrame.timestamp = timestamp;
     
     [super sendVideoFrame:videoFrame];
     

@@ -19,11 +19,7 @@ typedef void(^CompletionHandler)(BOOL success, id response, NSError *error);
 
 @property (strong, nonatomic) NSString       *installDate;
 @property (strong, nonatomic) NSString       *installDateTemp;
-@property (strong, nonatomic) NSDate*       lastLoggedDateTime;
-@property (assign, nonatomic) CLLocationCoordinate2D     oldLocation;
-@property(strong, nonatomic) NSString       *countryName;
-@property(strong, nonatomic) NSString       *cityName;
-@property(strong, nonatomic) NSString       *stateName;
+
 
 + (QMNetworkManager *)sharedManager;
 
@@ -34,7 +30,7 @@ typedef void(^CompletionHandler)(BOOL success, id response, NSError *error);
                            email:(NSString *)email
                         password:(NSString *)password;
 
-- (BFTask *)updateLocate;
+//- (BFTask *)updateLocate;
 
 - (BFTask *) restorePasswordWithEmail:(NSString *)email;
 
@@ -140,7 +136,7 @@ typedef void(^CompletionHandler)(BOOL success, id response, NSError *error);
 
 - (BFTask*) getMyCreatedGroupsWithOffset: (NSString*) filter offset:(NSNumber*) offset;
 
-- (BFTask*) getMyJoinedGroupsWithOffset: (NSString*) filter offset:(NSNumber*) offset;
+- (BFTask*) getMyJoinedGroupsWithGroupID: (NSNumber*) groupID withType: (NSString*) type;
 
 - (BFTask*)createNewTopicWithGroupID:(NSNumber *)groupID text:(NSString *)text permission:(NSNumber *)permission;
 

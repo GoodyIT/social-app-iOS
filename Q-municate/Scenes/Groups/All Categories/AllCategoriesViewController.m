@@ -93,7 +93,7 @@
     [AllCategoriesCell registerForReuseInTableView:self.tableView];
     
     self.tableView.rowHeight = UITableViewAutomaticDimension;
-    self.tableView.estimatedRowHeight = THE_CELL_HEIGHT;
+    self.tableView.estimatedRowHeight = THE_CELL_HEIGHT/2;
 }
 
 - (NSString*) getFilter {

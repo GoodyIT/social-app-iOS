@@ -375,7 +375,7 @@
         <scene sceneID="1e0-xw-uuv">
             <objects>
                 <navigationController storyboardIdentifier="GroupsMainNavigation" useStoryboardIdentifierAsRestorationIdentifier="YES" id="hHF-8A-PPS" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="4It-uk-Ldc">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="4It-uk-Ldc">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -692,7 +692,7 @@
             <objects>
                 <navigationController storyboardIdentifier="GroupDetailNavigation" automaticallyAdjustsScrollViewInsets="NO" id="dYP-dB-z7K" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="W5b-EQ-Vmr">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="W5b-EQ-Vmr">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -824,7 +824,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x23-pU-1iJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7193" y="236"/>
+            <point key="canvasLocation" x="7222" y="266"/>
         </scene>
         <!--My Created Group View Controller-->
         <scene sceneID="9lM-1E-GQJ">
@@ -912,7 +912,7 @@
                                         <rect key="frame" x="0.0" y="256.5" width="375" height="45"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ljy-U9-uQY">
-                                                <rect key="frame" x="115" y="0.5" width="145" height="44"/>
+                                                <rect key="frame" x="115" y="0.0" width="145" height="44"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="44" id="6gG-TH-PEd"/>
                                                     <constraint firstAttribute="width" constant="145" id="gvE-EH-pIa"/>
@@ -1036,7 +1036,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="DEm-ul-myL"/>
-        <segue reference="tib-c0-D9L"/>
+        <segue reference="ewT-7f-cCb"/>
         <segue reference="Yio-jc-tBx"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -107,7 +107,7 @@ static NSString *const rateComment = @"post/rate-comment/";
 
 static NSString *const getAllGroups = @"circle/search/";
 static NSString *const getCreatedGroups = @"circle/get-created-circles/";
-static NSString *const getJoinedGroups = @"circle/get-joined-circles/search/";
+static NSString *const getJoinedGroups = @"circle/get-joined-circles/";
 static NSString *const createNewGroup = @"circle/create-new-circle/";
 static NSString *const getGroup = @"circle/get-circle/";
 static NSString *const joinGroup = @"circle/join-circle/";

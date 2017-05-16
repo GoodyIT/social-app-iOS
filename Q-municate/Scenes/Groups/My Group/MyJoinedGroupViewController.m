@@ -111,7 +111,6 @@
     self.tableView.estimatedRowHeight = THE_CELL_HEIGHT;
 }
 
-
 - (void)addTapGesture {
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap)];
     tap.cancelsTouchesInView = NO;
@@ -135,12 +134,14 @@
     return self.filter;
 }
 
-- (NSNumber *)currentJoinedOffset {
-    if (_currentJoinedOffset == nil || isFirstLoading) {
-        _currentJoinedOffset = [[NSNumber alloc] initWithInteger:0];
+- (NSNumber*) oldGroupID {
+    
+    if (self.joinedGroupsArray == nil || [self.joinedGroupsArray count] == 0) {
+        return @-1;
     }
     
-    return _currentJoinedOffset;
+    GroupModel* group =  (GroupModel*)self.joinedGroupsArray.lastObject;
+    return group.groupID;
 }
 
 - (void) addMyNewGroup
@@ -150,18 +151,17 @@
     }
     isBottomRefreshing = YES;
     
-    [self addNewJoinedGroupsWithCompletion:nil];
+    [self addOldJoinedGroups];
 }
 
 - (void) addNewJoinedGroupsWithCompletion: (void (^)(void)) completion
 {
     @weakify(self);
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    [[[QMNetworkManager sharedManager] getMyJoinedGroupsWithOffset:[self getFilter] offset:[self currentJoinedOffset]] continueWithBlock:^id _Nullable(BFTask * _Nonnull serverTask) {
+    [[[QMNetworkManager sharedManager] getMyJoinedGroupsWithGroupID:@(-1) withType:@"new"] continueWithBlock:^id _Nullable(BFTask * _Nonnull serverTask) {
         
         @strongify(self);
         if (self == nil) return nil;
-        self->isBottomRefreshing = NO;
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         
         if (serverTask.isFaulted) {
@@ -171,16 +171,10 @@
             return nil;
         }
         
-        NSError *offsetError = [NSError errorWithDomain:@"99999" code:99999 userInfo:@{NSLocalizedDescriptionKey:[serverTask.result valueForKey:@"offset"]}];
-        self.currentJoinedOffset = @([offsetError.localizedDescription integerValue]);
         NSMutableArray *resultArray = [[NSMutableArray alloc] initWithArray:[GroupModel getGroupsListFromResponse:serverTask.result[@"circles"]]];
         
-        if (self->isFirstLoading) {
-            self.joinedGroupsArray = resultArray;
-        } else {
-            [self.joinedGroupsArray addObjectsFromArray:resultArray];
-        }
-   
+        self.joinedGroupsArray = resultArray;
+        
         if  (completion != nil) {
             completion();
         }
@@ -192,11 +186,40 @@
     }];
 }
 
+- (void) addOldJoinedGroups
+{
+    @weakify(self);
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    [[[QMNetworkManager sharedManager] getMyJoinedGroupsWithGroupID:[self oldGroupID] withType:@"old"] continueWithBlock:^id _Nullable(BFTask * _Nonnull serverTask) {
+        
+        @strongify(self);
+        if (self == nil) return nil;
+        self->isBottomRefreshing = NO;
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+        
+        if (serverTask.isFaulted) {
+            [SVProgressHUD showErrorWithStatus:serverTask.error.localizedDescription];
+            
+            return nil;
+        }
+        
+        NSMutableArray *resultArray = [[NSMutableArray alloc] initWithArray:[GroupModel getGroupsListFromResponse:serverTask.result[@"circles"]]];
+        
+        if (resultArray.count != 0){
+            [self.joinedGroupsArray addObjectsFromArray:resultArray];
+            
+            [self.tableView reloadData];
+        }
+        
+        return nil;
+    }];
+}
+
 #pragma mark - ScrollView Delegate
 - (void) scrollViewDidScroll:(UIScrollView *)scrollView
 {
     CGFloat offsetY = scrollView.contentOffset.y;
-    CGFloat contentHeight = scrollView.contentSize.height;
+    CGFloat contentHeight = scrollView.contentSize.height+44+7;
     
     if (offsetY > contentHeight - scrollView.frame.size.height && !isFirstLoading) {
         

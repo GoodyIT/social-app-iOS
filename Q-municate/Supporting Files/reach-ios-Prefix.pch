@@ -55,6 +55,7 @@
 
 #import "QMCore.h"
 #import "QMNetworkManager.h"
+#import "LocationManager.h"
 #import "DataManager.h"
 #import "XPageManager.h"
 #import "UINavigationController+QMNotification.h"

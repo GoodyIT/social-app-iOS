@@ -79,7 +79,7 @@
     if ([groupModel.permission boolValue]) {
         [self.avatarImageView setImageWithURL:[NSURL URLWithString:groupModel.owner.avatarURL]
                               placeholder:[UIImage imageNamed:@"default"]
-                                  options:SDWebImageLowPriority
+                                  options:SDWebImageDelayPlaceholder
                                  progress:nil
                            completedBlock:nil];
         self.avatarImageView.delegate = self;

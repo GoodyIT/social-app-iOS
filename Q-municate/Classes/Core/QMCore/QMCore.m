@@ -259,11 +259,10 @@ static NSString *const kQMContactListCacheNameKey = @"q-municate-contacts";
     return nil;
 }
 
+
 - (BFTask *)logout {
     
     BFTaskCompletionSource *source = [BFTaskCompletionSource taskCompletionSource];
-    
-    [[TokenModel sharedInstance] clearToken];
     
     @weakify(self);
     [[self.pushNotificationManager unSubscribeFromPushNotifications] continueWithBlock:^id _Nullable(BFTask * _Nonnull __unused t) {
@@ -288,6 +287,9 @@ static NSString *const kQMContactListCacheNameKey = @"q-municate-contacts";
             [self.contactListService.contactListMemoryStorage free];
             
             [self.currentProfile clearProfile];
+            
+            [[TokenModel sharedInstance] clearToken];
+            
             [source setResult:nil];
         }];
         
@@ -296,6 +298,8 @@ static NSString *const kQMContactListCacheNameKey = @"q-municate-contacts";
     
     return source.task;
 }
+
+
 
 #pragma mark QMContactListServiceCacheDelegate delegate
 

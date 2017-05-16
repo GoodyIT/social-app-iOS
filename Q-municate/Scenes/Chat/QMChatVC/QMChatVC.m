@@ -1315,13 +1315,13 @@ NYTPhotosViewControllerDelegate
     UIButton *audioButton = [QMChatButtonsFactory audioCall];
     [audioButton addTarget:self action:@selector(audioCallAction) forControlEvents:UIControlEventTouchUpInside];
     
-//    UIButton *videoButton = [QMChatButtonsFactory videoCall];
-//    [videoButton addTarget:self action:@selector(videoCallAction) forControlEvents:UIControlEventTouchUpInside];
-//    
-//    UIBarButtonItem *videoCallBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:videoButton];
+    UIButton *videoButton = [QMChatButtonsFactory videoCall];
+    [videoButton addTarget:self action:@selector(videoCallAction) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIBarButtonItem *videoCallBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:videoButton];
     UIBarButtonItem *audioCallBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:audioButton];
     
-    [self.navigationItem setRightBarButtonItems:@[ audioCallBarButtonItem] animated:YES];
+    [self.navigationItem setRightBarButtonItems:@[videoCallBarButtonItem, audioCallBarButtonItem] animated:YES];
     
     UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 13, 23)];
     [backButton setBackgroundImage:[UIImage imageNamed:@"Back"] forState:UIControlStateNormal];
@@ -1680,6 +1680,7 @@ NYTPhotosViewControllerDelegate
 }
 
 - (void)chatCellDidTapAvatar:(QMChatCell *)cell {
+    [self.view endEditing:YES];
     
     if (self.chatDialog.type == QBChatDialogTypePrivate) {
         

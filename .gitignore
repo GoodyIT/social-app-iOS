@@ -39,3 +39,7 @@ Q-municate/profile
 Q-municate/*.moved-aside
 Q-municate/DerivedData
 Q-municate/*.hmap
+
+Podfile.lock
+Pods/
+

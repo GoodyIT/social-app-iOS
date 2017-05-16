@@ -86,7 +86,7 @@
 
 - (void)configureCellWithPostInfo: (CommentModel*) commentModel
 {
-    [self.userAvatarImage setImageWithURL:[NSURL URLWithString:commentModel.author.avatarURL] placeholder:[UIImage imageNamed:@"default"] options:SDWebImageHighPriority progress:nil completedBlock:nil];
+    [self.userAvatarImage setImageWithURL:[NSURL URLWithString:commentModel.author.avatarURL] placeholder:[UIImage imageNamed:@"default"] options:SDWebImageDelayPlaceholder progress:nil completedBlock:nil];
     
     self.userAvatarImage.delegate = self;
     

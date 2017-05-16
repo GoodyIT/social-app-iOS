@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <UserNotifications/UserNotifications.h>
 
 @interface QMAppDelegate : UIResponder <UIApplicationDelegate>
 

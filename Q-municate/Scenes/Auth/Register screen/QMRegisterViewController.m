@@ -148,9 +148,9 @@
         [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"QM_STR_FILL_IN_ALL_THE_FIELDS", nil)];
     } else  if (![email isEmailValid]) {
         [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"Please input valid email", nil)];
-    } else if (password.length < 6 || password.length > 20)
+    } else if (password.length < 8 || password.length > 20)
     {
-        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"The password length should be between 6 and 20", nil)];
+        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"The password length should be between 8 and 20", nil)];
     } else if (username.length < 6)
     {
         [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"The username length should be greater than 6", nil)];
